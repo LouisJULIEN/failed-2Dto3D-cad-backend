@@ -8,7 +8,7 @@ def parse_two_D_projections(two_D_projections: Raw2DProjections) -> parsed_2D_pr
         parsed_two_D_projections[a_projection_axes] = {}
 
         a_shape: Raw2DShape
-        for a_shape in a_projection:
+        for a_shape_id, a_shape in a_projection.items():
 
             dict_of_parsed_vertices = {
                 _id: PointWithId(_id, a_vertex) for _id, a_vertex in a_shape["vertices"].items()
@@ -20,10 +20,10 @@ def parse_two_D_projections(two_D_projections: Raw2DProjections) -> parsed_2D_pr
                     LineStringWithId(edge_id, [dict_of_parsed_vertices[a_point_id] for a_point_id in points_id])
                 )
 
-            parsed_two_D_projections[a_projection_axes][a_shape["id"]]({
+            parsed_two_D_projections[a_projection_axes][a_shape_id] = {
                 "type": a_shape["type"],
                 "edges": dict_of_parsed_edges,
                 "vertices": dict_of_parsed_vertices,
-            })
+            }
 
     return parsed_two_D_projections

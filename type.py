@@ -5,8 +5,6 @@ from superclasses import PointWithId, LineStringWithId
 
 class Raw2DShape(TypedDict):
     type: str
-    constAxis: str
-    id: int
     vertices: Dict[int, tuple]
     edges: Dict[int, Tuple[int, int]]
 
@@ -26,5 +24,5 @@ class parsed_2D_projections(TypedDict):
     yz: Dict[int, AParsedShape]
 
 
-Reconstructed3DPoints = List[PointWithId]
+Reconstructed3DPoints = Dict[int, PointWithId]
 Reconstructed3DEdges = List[LineStringWithId]

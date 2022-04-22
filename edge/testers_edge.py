@@ -6,4 +6,4 @@ class TestersEdge:
 
     @staticmethod
     def reconstruct_vertices(input, expected_vertices):
-        reconstruct_vertices(input_vertices)
+        reconstruct_vertices(input)

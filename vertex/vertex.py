@@ -5,13 +5,20 @@ from superclasses import PointWithId
 from type import parsed_2D_projections, Reconstructed3DPoints
 
 
+def get_all_vertices(a_projection):
+    all_vertices = []
+    for a_shape in a_projection.values():
+        all_vertices += a_shape['vertices'].values()
+    return all_vertices
+
+
 def reconstruct_vertices(parsed_two_D_projections: parsed_2D_projections) \
         -> Tuple[Reconstructed3DPoints, Reconstructed3DPoints]:
-    found_3D_points = []
+    found_3D_points = {}
 
-    edges_xy = parsed_two_D_projections[0]["vertices"]
-    edges_yz = parsed_two_D_projections[1]["vertices"]
-    edges_xz = parsed_two_D_projections[2]["vertices"]
+    edges_xy = get_all_vertices(parsed_two_D_projections['xy'])
+    edges_yz = get_all_vertices(parsed_two_D_projections['yz'])
+    edges_xz = get_all_vertices(parsed_two_D_projections['xz'])
 
     matched_a_3D_point: bool
     an_xy_point: PointWithId
@@ -32,15 +39,15 @@ def reconstruct_vertices(parsed_two_D_projections: parsed_2D_projections) \
 
                     if first_point.distance(second_point) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
                         first_point.link_to_multiples([an_xy_point, an_xz_point, an_yz_point])
-                        found_3D_points.append(first_point)
+                        found_3D_points[three_d_point_id] = first_point
                         an_xy_point.link_to(first_point)
                         an_xz_point.link_to(first_point)
                         an_yz_point.link_to(first_point)
 
-    dandling_points = []
+    dandling_points = {}
 
     for a_project_point in edges_xy + edges_xz + edges_yz:
         if a_project_point.is_linked_to_none():
-            dandling_points.append(a_project_point)
+            dandling_points[a_project_point.id] = a_project_point
 
     return found_3D_points, dandling_points

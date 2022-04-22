@@ -1,6 +1,6 @@
-from parse import parse_two_D_projections
+from preprocess.parse import parse_two_D_projections
 from type import Raw2DProjections
-from validate import validateTwoDProjections
+from preprocess.validate import validateTwoDProjections
 from vertex.vertex import reconstruct_vertices
 
 

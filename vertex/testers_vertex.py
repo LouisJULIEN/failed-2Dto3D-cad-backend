@@ -1,5 +1,5 @@
 from graphics import draw_3D_points_list
-from parse import parse_two_D_projections
+from preprocess.parse import parse_two_D_projections
 from vertex import reconstruct_vertices
 
 
@@ -8,25 +8,20 @@ class TestersVertex:
 
     @staticmethod
     def __add_ids(input):
-        all_axis_projection_with_ids = []
-        for an_axis_projection in input:
-            an_axis_projection_with_ids = []
+        for an_axis_shapes in input.values():
 
-            for a_shape in an_axis_projection:
-                a_shape['id'] = TestersVertex.id_number
-                TestersVertex.id_number += 1
-
-                formatted_vertices = {}
+            for a_shape_id, a_shape in an_axis_shapes.items():
+                a_formatted_shape = {
+                    "edges": {},
+                    "vertices": {},
+                    "type": a_shape["type"]
+                }
                 for a_point in a_shape["vertices"]:
-                    formatted_vertices[TestersVertex.id_number] = a_point
+                    a_formatted_shape["vertices"][TestersVertex.id_number] = a_point
                     TestersVertex.id_number += 1
+                an_axis_shapes[a_shape_id] = a_formatted_shape
 
-                a_shape["vertices"] = formatted_vertices
-                a_shape["edges"] = {}
-                an_axis_projection_with_ids.append(a_shape)
-
-            all_axis_projection_with_ids.append(an_axis_projection_with_ids)
-        return all_axis_projection_with_ids
+        return input
 
     @staticmethod
     def __parse_input(input):
@@ -40,13 +35,13 @@ class TestersVertex:
         parsed_input = TestersVertex.__parse_input(input)
         found, dandling = reconstruct_vertices(parsed_input)
 
-        print("\nFOUND \n")
-        [print(f) for f in found]
-        print("DANDLING \n")
-        [print(f) for f in dandling]
+        print("\nFOUND")
+        [print(f) for f in found.values()]
+        print("DANDLING")
+        [print(f) for f in dandling.values()]
 
         if draw:
-            draw_3D_points_list([found, dandling])
+            draw_3D_points_list([list(found.values()), list(dandling.values())])
 
         assert len(found) == expected_found_vertices_number, \
             f"{len(found)} vs {expected_found_vertices_number}"
