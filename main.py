@@ -1,9 +1,10 @@
 from parse import parse_two_D_projections
+from type import Raw2DProjections
 from validate import validateTwoDProjections
-from vertice import reconstruct_vertices
+from vertex.vertex import reconstruct_vertices
 
 
-def two_D_to_three_D(two_D_projections: list):  # list with only 3 elements
+def two_D_to_three_D(two_D_projections: Raw2DProjections):
     assert validateTwoDProjections(two_D_projections), "invalid twoDProjections"
     parsed_two_D_projections = parse_two_D_projections(two_D_projections)
 

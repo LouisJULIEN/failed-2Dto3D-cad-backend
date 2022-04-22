@@ -1,4 +1,4 @@
-from vertice.vertex import reconstruct_vertices
+from vertex.vertex import reconstruct_vertices
 
 
 class TestersEdge:

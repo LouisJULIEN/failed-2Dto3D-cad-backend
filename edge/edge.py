@@ -1,4 +1,4 @@
-from type import AParsedProjection, parsed_2D_projections, Reconstructed3DPoints
+from type import AParsedShape, parsed_2D_projections, Reconstructed3DPoints
 
 
 def reconstruct_edges(parsed_projections: parsed_2D_projections, reconstructed_3d_points: Reconstructed3DPoints):

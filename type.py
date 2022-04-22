@@ -1,15 +1,30 @@
-from typing import List, TypedDict
+from typing import List, TypedDict, Dict, Tuple
 
-from superclasses import PointWithId, PolygonWithId, LineStringWithId
-
-
-class AParsedProjection(TypedDict):
-    shapes: List[PolygonWithId]
-    edges: List[LineStringWithId]
-    vertices: List[PointWithId]
+from superclasses import PointWithId, LineStringWithId
 
 
-parsed_2D_projections = List[AParsedProjection]
+class Raw2DShape(TypedDict):
+    type: str
+    constAxis: str
+    id: int
+    vertices: Dict[int, tuple]
+    edges: Dict[int, Tuple[int, int]]
+
+
+Raw2DProjections = Dict[str, Dict[int, Raw2DShape]]  # projection[axes] -> shape[id] -> [edge, vertices, faces]
+
+
+class AParsedShape(TypedDict):
+    edges: Dict[int, LineStringWithId]
+    vertices: Dict[int, PointWithId]
+    type: str
+
+
+class parsed_2D_projections(TypedDict):
+    xy: Dict[int, AParsedShape]  # shapeId -> shapeData (for projections face = shape)
+    xz: Dict[int, AParsedShape]
+    yz: Dict[int, AParsedShape]
+
 
 Reconstructed3DPoints = List[PointWithId]
 Reconstructed3DEdges = List[LineStringWithId]
