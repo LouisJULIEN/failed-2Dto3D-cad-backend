@@ -1,9 +1,9 @@
-from testers import Testers
+from testers_vertex import TestersVertex
 
 
 def test_parallelepiped():
     # a 2 x 1 x 3 parallelepiped
-    Testers.candidate_vertices([
+    TestersVertex.reconstruct_vertices([
         [{
             'type': "polygon",
             "constAxis": "z",
@@ -24,7 +24,7 @@ def test_parallelepiped():
 
 
 def test_non_hidden_home_shape():
-    Testers.candidate_vertices([
+    TestersVertex.reconstruct_vertices([
         [{
             'type': "polygon",
             "constAxis": "z",
@@ -49,7 +49,7 @@ def test_non_hidden_home_shape():
 
 
 def skip_test_hidden_home_shape():
-    Testers.candidate_vertices([
+    TestersVertex.reconstruct_vertices([
         [{
             'type': "polygon",
             "constAxis": "z",

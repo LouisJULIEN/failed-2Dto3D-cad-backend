@@ -1,9 +1,9 @@
 from graphics import draw_3D_points_list
 from parse import parse_two_D_projections
-from vertice import find_candidate_vertices
+from vertex import reconstruct_vertices
 
 
-class Testers:
+class TestersVertex:
     id_number = 0
 
     @staticmethod
@@ -13,15 +13,16 @@ class Testers:
             an_axis_projection_with_ids = []
 
             for a_shape in an_axis_projection:
-                a_shape['id'] = Testers.id_number
-                Testers.id_number += 1
+                a_shape['id'] = TestersVertex.id_number
+                TestersVertex.id_number += 1
 
                 formatted_vertices = {}
                 for a_point in a_shape["vertices"]:
-                    formatted_vertices[Testers.id_number] = a_point
-                    Testers.id_number += 1
+                    formatted_vertices[TestersVertex.id_number] = a_point
+                    TestersVertex.id_number += 1
 
                 a_shape["vertices"] = formatted_vertices
+                a_shape["edges"] = {}
                 an_axis_projection_with_ids.append(a_shape)
 
             all_axis_projection_with_ids.append(an_axis_projection_with_ids)
@@ -29,15 +30,15 @@ class Testers:
 
     @staticmethod
     def __parse_input(input):
-        input_with_ids = Testers.__add_ids(input)
+        input_with_ids = TestersVertex.__add_ids(input)
         return parse_two_D_projections(input_with_ids)
 
     @staticmethod
-    def candidate_vertices(input,
-                           expected_found_vertices_number: int = 0, expected_dandling_vertices_number: int = 0,
-                           draw=False):
-        parsed_input = Testers.__parse_input(input)
-        found, dandling = find_candidate_vertices(parsed_input)
+    def reconstruct_vertices(input,
+                             expected_found_vertices_number: int = 0, expected_dandling_vertices_number: int = 0,
+                             draw=False):
+        parsed_input = TestersVertex.__parse_input(input)
+        found, dandling = reconstruct_vertices(parsed_input)
 
         print("\nFOUND \n")
         [print(f) for f in found]

@@ -1,13 +1,12 @@
+from typing import Tuple
+
 from constant import MAX_POINT_TO_POINT_ERROR_DISTANCE
 from superclasses import PointWithId
-from type import parsed_2D
+from type import parsed_2D_projections, Reconstructed3DPoints
 
 
-def find_candidate_vertices(parsed_two_D_projections: parsed_2D):
-    # we suppose Y is the common dimension
-    # first element of the list is on (X;Y)
-    # second element of the list is on (Y;Z)
-
+def reconstruct_vertices(parsed_two_D_projections: parsed_2D_projections) \
+        -> Tuple[Reconstructed3DPoints, Reconstructed3DPoints]:
     found_3D_points = []
 
     edges_xy = parsed_two_D_projections[0]["vertices"]

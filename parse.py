@@ -1,9 +1,9 @@
-from typing import List, Dict, TypedDict
+from typing import List, Dict, TypedDict, Tuple
 
 from shapely.geometry import LineString
 
-from superclasses import PointWithId, PolygonWithId
-from type import parsed_2D
+from superclasses import PointWithId, PolygonWithId, LineStringWithId
+from type import parsed_2D_projections
 
 
 class Raw2DShape(TypedDict):
@@ -11,12 +11,13 @@ class Raw2DShape(TypedDict):
     constAxis: str
     id: int
     vertices: Dict[int, tuple]
+    edges: Dict[int, Tuple[int, int]]
 
 
 Raw2DProjections = List[List[Raw2DShape]]
 
 
-def parse_two_D_projections(two_D_projections: Raw2DProjections) -> parsed_2D:
+def parse_two_D_projections(two_D_projections: Raw2DProjections) -> parsed_2D_projections:
     parsed_two_D_projections = []
     for a_projection in two_D_projections:
         a_parsed_shapes_two_D_projection = []
@@ -25,19 +26,18 @@ def parse_two_D_projections(two_D_projections: Raw2DProjections) -> parsed_2D:
 
         a_shape: Raw2DShape
         for a_shape in a_projection:
-            a_parsed_vertices_two_D_projection += [
-                PointWithId(_id, a_vertex) for _id, a_vertex in a_shape["vertices"].items()
-            ]
+
+            dict_of_parsed_vertices = {
+                _id: PointWithId(_id, a_vertex) for _id, a_vertex in a_shape["vertices"].items()
+            }
+            a_parsed_vertices_two_D_projection += list(dict_of_parsed_vertices.values())
+
+            for edge_id, points_id in a_shape["edges"].items():
+                a_parsed_edges_two_D_projection.append(
+                    LineStringWithId(edge_id, [dict_of_parsed_vertices[a_point_id] for a_point_id in points_id])
+                )
 
             assert a_shape["type"] == "polygon"
-
-            a_parsed_edges_two_D_projection += [
-                LineString([a_parsed_vertices_two_D_projection[i], a_parsed_vertices_two_D_projection[i + 1]])
-                for i in range(len(a_parsed_vertices_two_D_projection) - 1)
-            ]
-            a_parsed_edges_two_D_projection += [
-                LineString([a_parsed_vertices_two_D_projection[-1], a_parsed_vertices_two_D_projection[0]])]
-
             a_parsed_shapes_two_D_projection.append(
                 PolygonWithId(a_shape['id'], a_parsed_vertices_two_D_projection))
 
