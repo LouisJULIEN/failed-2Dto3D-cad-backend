@@ -1,3 +1,4 @@
+from graphics import draw_3D_points_list
 from parse import parse_two_D_projections
 from vertice import find_candidate_vertices
 
@@ -33,11 +34,19 @@ class Testers:
 
     @staticmethod
     def candidate_vertices(input,
-                           expected_found_vertices_number: int = 0, expected_dandling_vertices_number: int = 0):
+                           expected_found_vertices_number: int = 0, expected_dandling_vertices_number: int = 0,
+                           draw=False):
         parsed_input = Testers.__parse_input(input)
         found, dandling = find_candidate_vertices(parsed_input)
-        print("\n")
+
+        print("\nFOUND \n")
         [print(f) for f in found]
+        print("DANDLING \n")
+        [print(f) for f in dandling]
+
+        if draw:
+            draw_3D_points_list([found, dandling])
+
         assert len(found) == expected_found_vertices_number, \
             f"{len(found)} vs {expected_found_vertices_number}"
         assert len(dandling) == expected_dandling_vertices_number, \

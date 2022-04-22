@@ -40,6 +40,11 @@ def find_candidate_vertices(parsed_two_D_projections: parsed_2D):
 
     found_3D_points = remove_duplicated_reconstructed_points(found_3D_points)
     dandling_points = []
+
+    for a_project_point in edges_xy + edges_xz + edges_yz:
+        if a_project_point.is_linked_to_none():
+            dandling_points.append(a_project_point)
+
     return found_3D_points, dandling_points
 
 
