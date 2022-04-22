@@ -23,7 +23,7 @@ def test_parallelepiped():
     ], 8)
 
 
-def test_convex_home_shape():
+def test_non_hidden_home_shape():
     Testers.candidate_vertices([
         [{
             'type': "polygon",
@@ -48,7 +48,7 @@ def test_convex_home_shape():
     ], 10, draw=True)
 
 
-def skip_test_non_convex_home_shape():
+def skip_test_hidden_home_shape():
     Testers.candidate_vertices([
         [{
             'type': "polygon",
