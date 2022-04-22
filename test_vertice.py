@@ -45,7 +45,7 @@ def test_non_hidden_home_shape():
             "vertices": [(0.0, 0.0, 0.0), (0.0, 0.0, 4.0), (2.0, 0.0, 4.0), (3.0, 0.0, 1.0), (3.0, 0.0, 0.0)]
         }],
         # X;Z with Y=0
-    ], 10, draw=True)
+    ], 10)
 
 
 def skip_test_hidden_home_shape():
