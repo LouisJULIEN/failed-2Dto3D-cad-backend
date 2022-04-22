@@ -23,7 +23,7 @@ def test_parallelepiped():
     ], 8)
 
 
-def skip_test_home_shape():
+def test_home_shape():
     Testers.candidate_vertices([
         [{
             'type': "polygon",
