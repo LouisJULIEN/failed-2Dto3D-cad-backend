@@ -51,7 +51,7 @@ class LineStringWithId(LinkedWithId, LineString):
     def __init__(self, _id, *args, **kwargs):
         LineString.__init__(self, *args, **kwargs)
         LinkedWithId.__init__(self, _id)
-        self.three_D_points = args[0]
+        self.three_D_points = tuple(args[0]) # the id of the start and end points.
 
 
 class PolygonWithId(LinkedWithId, Polygon):

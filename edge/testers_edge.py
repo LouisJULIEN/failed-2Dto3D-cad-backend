@@ -11,7 +11,7 @@ class TestersEdge:
     id_number = 0
 
     @staticmethod
-    def format_3_D_points(parsed_input: Parsed2DProjections, three_D_points: Dict[int, List[int]]
+    def format_3_D_points(parsed_input: Parsed2DProjections, three_D_points: Dict[int, Tuple[int, int]]
                           ) -> Reconstructed3DPoints:
         formatted_3D_points = {}
 
@@ -40,8 +40,8 @@ class TestersEdge:
 
         reconstructed_3_D_vertices_edges = []
         for a_reconstructed_edge in reconstructed_3_D_edges.values():
-            reconstructed_3_D_vertices_edges.append([
+            reconstructed_3_D_vertices_edges.append(tuple([
                 a_three_D_point.id for a_three_D_point in a_reconstructed_edge.three_D_points
-            ])
+            ]))
 
         unittest.TestCase().assertCountEqual(expected_edge_vertices, reconstructed_3_D_vertices_edges)

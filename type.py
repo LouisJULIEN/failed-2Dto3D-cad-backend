@@ -1,4 +1,4 @@
-from typing import List, TypedDict, Dict, Tuple
+from typing import TypedDict, Dict, Tuple
 
 from superclasses import PointWithId, LineStringWithId
 
