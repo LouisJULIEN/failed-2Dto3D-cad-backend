@@ -2,7 +2,7 @@ from typing import Tuple
 
 from constant import MAX_POINT_TO_POINT_ERROR_DISTANCE
 from superclasses import PointWithId
-from type import parsed_2D_projections, Reconstructed3DPoints
+from type import Parsed2DProjections, Reconstructed3DPoints
 
 
 def get_all_vertices(a_projection):
@@ -12,7 +12,7 @@ def get_all_vertices(a_projection):
     return all_vertices
 
 
-def reconstruct_vertices(parsed_two_D_projections: parsed_2D_projections) \
+def reconstruct_vertices(parsed_two_D_projections: Parsed2DProjections) \
         -> Tuple[Reconstructed3DPoints, Reconstructed3DPoints]:
     found_3D_points = {}
 

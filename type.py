@@ -18,11 +18,11 @@ class AParsedShape(TypedDict):
     type: str
 
 
-class parsed_2D_projections(TypedDict):
+class Parsed2DProjections(TypedDict):
     xy: Dict[int, AParsedShape]  # shapeId -> shapeData (for projections face = shape)
     xz: Dict[int, AParsedShape]
     yz: Dict[int, AParsedShape]
 
 
 Reconstructed3DPoints = Dict[int, PointWithId]
-Reconstructed3DEdges = List[LineStringWithId]
+Reconstructed3DEdges = Dict[int, LineStringWithId]

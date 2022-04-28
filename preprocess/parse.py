@@ -1,8 +1,8 @@
 from superclasses import PointWithId, LineStringWithId
-from type import parsed_2D_projections, Raw2DShape, Raw2DProjections
+from type import Parsed2DProjections, Raw2DShape, Raw2DProjections
 
 
-def parse_two_D_projections(two_D_projections: Raw2DProjections) -> parsed_2D_projections:
+def parse_two_D_projections(two_D_projections: Raw2DProjections) -> Parsed2DProjections:
     parsed_two_D_projections = {}
     for a_projection_axes, a_projection in two_D_projections.items():
         parsed_two_D_projections[a_projection_axes] = {}
