@@ -19,6 +19,9 @@ def parse_two_D_projections(two_D_projections: Raw2DProjections) -> Parsed2DProj
                 dict_of_parsed_edges[edge_id] = (
                     LineStringWithId(edge_id, [dict_of_parsed_vertices[a_point_id] for a_point_id in points_id])
                 )
+                dict_of_parsed_edges[edge_id].link_to_multiples([
+                    dict_of_parsed_vertices[a_point_id] for a_point_id in points_id
+                ])
 
             parsed_two_D_projections[a_projection_axes][a_shape_id] = {
                 "type": a_shape["type"],

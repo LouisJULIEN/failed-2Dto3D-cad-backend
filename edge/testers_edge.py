@@ -6,6 +6,7 @@ from superclasses import PointWithId
 from type import Reconstructed3DPoints, Parsed2DProjections
 import unittest
 
+
 class TestersEdge:
     id_number = 0
 
@@ -20,11 +21,15 @@ class TestersEdge:
                 for a_vertex_id, a_vertex_point in a_shape['vertices'].items():
                     all_vertices_projections[a_vertex_id] = a_vertex_point
 
-        for a_3D_point_id, a_3D_point_orignals in three_D_points.items():
+        for a_3D_point_id, projected_vertices_ids in three_D_points.items():
             formatted_3D_points[a_3D_point_id] = PointWithId(a_3D_point_id)
             formatted_3D_points[a_3D_point_id].link_to_multiples([
-                all_vertices_projections[_id] for _id in a_3D_point_orignals
+                all_vertices_projections[_id] for _id in projected_vertices_ids
             ])
+
+            for a_projection_point_id in projected_vertices_ids:
+                all_vertices_projections[a_projection_point_id].link_to(formatted_3D_points[a_3D_point_id])
+
         return formatted_3D_points
 
     @staticmethod
