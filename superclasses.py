@@ -3,6 +3,9 @@ from math import sqrt
 from shapely.geometry import Point, LineString, Polygon
 
 
+# TODO: separate projected and 3D classes
+# TODO: switch to vanilla classes
+
 class LinkedWithId:
     def __init__(self, _id):
         self.id = _id
@@ -48,6 +51,7 @@ class LineStringWithId(LinkedWithId, LineString):
     def __init__(self, _id, *args, **kwargs):
         LineString.__init__(self, *args, **kwargs)
         LinkedWithId.__init__(self, _id)
+        self.three_D_points = args[0]
 
 
 class PolygonWithId(LinkedWithId, Polygon):

@@ -27,7 +27,7 @@ def test_two_points():
     }, {
         10: [1, 3],
         11: [2, 4],
-    }, [(10, 11)])
+    }, [[10, 11]])
 
 
 def skip_test_three_points():
