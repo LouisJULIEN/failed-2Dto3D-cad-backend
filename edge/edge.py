@@ -3,7 +3,7 @@ from type import Parsed2DProjections, Reconstructed3DPoints, Reconstructed3DEdge
 
 
 def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_points: Reconstructed3DPoints
-                      ) -> Reconstructed3DEdges:
+                      ) -> (Reconstructed3DEdges, Reconstructed3DEdges):
     all_edges_projections = {}
     for a_projection in parsed_projections.values():
         for a_shape in a_projection.values():
@@ -33,4 +33,4 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
             del reconstructed_edges[reconstructed_edges_list[i + 1].id]
             # TODO: clean link projected vertex
 
-    return reconstructed_edges
+    return reconstructed_edges, {}

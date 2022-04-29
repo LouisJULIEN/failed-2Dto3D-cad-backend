@@ -33,15 +33,26 @@ class TestersEdge:
         return formatted_3D_points
 
     @staticmethod
-    def reconstruct_edges(input, reconstructed_3_D_points, expected_edge_vertices: List[List[int]]):
+    def reconstruct_edges(input, reconstructed_3_D_points,
+                          expected_edge_reconstructed: List[List[int]], expected_edge_dandling: List[List[int]] = None):
+        expected_edge_dandling = expected_edge_dandling or []
+
         parsed_input = parse_two_D_projections(input)
         parsed_reconstructed_3_D_points = TestersEdge.format_3_D_points(parsed_input, reconstructed_3_D_points)
-        reconstructed_3_D_edges = reconstruct_edges(parsed_input, parsed_reconstructed_3_D_points)
+        reconstructed_3_D_edges_output, dandling_3_D_edges_output = \
+            reconstruct_edges(parsed_input, parsed_reconstructed_3_D_points)
 
-        reconstructed_3_D_vertices_edges = []
-        for a_reconstructed_edge in reconstructed_3_D_edges.values():
-            reconstructed_3_D_vertices_edges.append(tuple([
+        reconstructed_3_D_edges = []
+        for a_reconstructed_edge in reconstructed_3_D_edges_output.values():
+            reconstructed_3_D_edges.append(tuple([
                 a_three_D_point.id for a_three_D_point in a_reconstructed_edge.three_D_points
             ]))
 
-        unittest.TestCase().assertCountEqual(expected_edge_vertices, reconstructed_3_D_vertices_edges)
+        dandling_3_D_edges = []
+        for a_dandling_edge in dandling_3_D_edges_output.values():
+            dandling_3_D_edges.append(tuple([
+                a_three_D_point.id for a_three_D_point in a_dandling_edge.three_D_points
+            ]))
+
+        unittest.TestCase().assertCountEqual(expected_edge_reconstructed, reconstructed_3_D_edges)
+        unittest.TestCase().assertCountEqual(expected_edge_dandling, dandling_3_D_edges)
