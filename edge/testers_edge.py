@@ -8,10 +8,8 @@ import unittest
 
 
 class TestersEdge:
-    id_number = 0
-
     @staticmethod
-    def format_3_D_points(parsed_input: Parsed2DProjections, three_D_points: Dict[int, Tuple[int, int]]
+    def format_3_D_points(parsed_input: Parsed2DProjections, three_D_points: Dict[str, Tuple[int, int]]
                           ) -> Reconstructed3DPoints:
         formatted_3D_points = {}
 
@@ -34,7 +32,7 @@ class TestersEdge:
 
     @staticmethod
     def reconstruct_edges(input, reconstructed_3_D_points,
-                          expected_edge_reconstructed: List[List[int]], expected_edge_dandling: List[List[int]] = None):
+                          expected_edge_reconstructed: List[List[str]], expected_edge_dandling: List[List[str]] = None):
         expected_edge_dandling = expected_edge_dandling or []
 
         parsed_input = parse_two_D_projections(input)

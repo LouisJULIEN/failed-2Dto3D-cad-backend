@@ -4,7 +4,7 @@ from vertex import reconstruct_vertices
 
 
 class TestersVertex:
-    id_number = 0
+    id_number = '0'
 
     @staticmethod
     def __add_ids(input):
@@ -18,7 +18,7 @@ class TestersVertex:
                 }
                 for a_point in a_shape["vertices"]:
                     a_formatted_shape["vertices"][TestersVertex.id_number] = a_point
-                    TestersVertex.id_number += 1
+                    TestersVertex.id_number = str(int(TestersVertex.id_number) + 1)
                 an_axis_shapes[a_shape_id] = a_formatted_shape
 
         return input

@@ -7,12 +7,12 @@ from shapely.geometry import Point, LineString, Polygon
 # TODO: switch to vanilla classes
 
 class LinkedWithId:
-    def __init__(self, _id):
+    def __init__(self, _id: str):
         self.id = _id
         self.links = set()
 
     def __hash__(self):
-        return self.id
+        return hash(self.id)
 
     def __eq__(self, other):
         return self.id == other.id
