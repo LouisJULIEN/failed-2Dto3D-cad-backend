@@ -4,6 +4,8 @@ from flask import Flask, request
 from main import two_D_to_three_D
 
 app = Flask(__name__)
+
+
 # FLASK_ENV=development FLASK_APP=web flask run
 
 @app.route("/health-check", methods=['GET'])
@@ -16,7 +18,7 @@ def get_version():
     return {'version': 1.0}
 
 
-raw_projection_schema = {
+raw_a_shape_projection_schema = {
     'type': 'dict',
     'require_all': True,
     'schema': {
@@ -35,6 +37,12 @@ raw_projection_schema = {
             'allow_unknown': True,
         },
     }
+}
+
+raw_projection_schema = {
+    'type': 'dict',
+    'keysrules': {'type': 'string', 'regex': '[a-z0-9-]+'},
+    'valuesrules': raw_a_shape_projection_schema,
 }
 
 raw_two_D_schema = {

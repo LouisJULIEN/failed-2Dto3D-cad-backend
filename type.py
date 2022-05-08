@@ -4,7 +4,7 @@ from superclasses import PointWithId, LineStringWithId
 
 
 class AnEdge(TypedDict):
-    vertexIds: Tuple[int, int]
+    verticesIds: Tuple[int, int]
 
 
 class AVertex(TypedDict):
