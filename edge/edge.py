@@ -12,6 +12,7 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
     reconstructed_edges = {}
     for an_edge_projection_id, an_edge_projection in all_edges_projections.items():
         # projected vertex have only one ancestor, the 3D point
+        # we assume everything is consistent
         reconstructed_edge_3D_points = [
             list(a_projected_vertex_of_edge.ancestors)[0] for a_projected_vertex_of_edge in an_edge_projection.ancestors
         ]

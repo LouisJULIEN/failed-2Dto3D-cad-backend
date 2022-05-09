@@ -47,12 +47,28 @@ class PointWithId(AncestorWithId, Point):
         # shapely is a 2D library
         return sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2)
 
+    def export(self):
+        return {
+            'id': self.id,
+            'ancestorsIds': sorted([a.id for a in self.ancestors]),
+            'x': self.x,
+            'y': self.y,
+            'z': self.z,
+        }
+
 
 class LineStringWithId(AncestorWithId, LineString):
     def __init__(self, _id, *args, **kwargs):
         LineString.__init__(self, *args, **kwargs)
         AncestorWithId.__init__(self, _id)
-        self.three_D_points = tuple(args[0]) # the id of the start and end points.
+        self.three_D_points = tuple(args[0])  # the id of the start and end points.
+
+    def export(self):
+        return {
+            'id': self.id,
+            'ancestorsIds': sorted([a.id for a in self.ancestors]),
+            'threeDPointsIds': sorted([pt.id for pt in self.three_D_points]),
+        }
 
 
 class PolygonWithId(AncestorWithId, Polygon):

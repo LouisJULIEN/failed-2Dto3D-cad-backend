@@ -38,25 +38,35 @@ Reconstructed3DVertices = Dict[str, PointWithId]
 Reconstructed3DEdges = Dict[str, LineStringWithId]
 
 
-class PointWithIdOutput(TypedDict):
-    id: str
-    x: float
-    y: float
-    z: float
-    twoDAncestorsIds: list
-
-
-class LineStringWithIdOutput(TypedDict):
-    id: str
-    twoDAncestorsIds: list
-    verticesIds: list
-
-
 class ReconstructedGeometry(TypedDict):
-    vertices: Dict[str, PointWithIdOutput]
-    edges: Dict[str, LineStringWithIdOutput]
+    vertices: Dict[str, PointWithId]
+    edges: Dict[str, LineStringWithId]
 
 
 class Reconstructed3DModel(TypedDict):
     reconstructed: ReconstructedGeometry
     dandling: ReconstructedGeometry
+
+
+class ExportedPoint:
+    id: str
+    ancestorsIds: List[str]
+    x: float
+    y: float
+    z: float
+
+
+class ExportedLine:
+    id: str
+    ancestorsIds: List[str]
+    threeDPointsIds: List[str]
+
+
+class ExportedReconstructedGeometry(TypedDict):
+    vertices: Dict[str, ExportedPoint]
+    edges: Dict[str, ExportedLine]
+
+
+class ExportedReconstructed3DModel(TypedDict):
+    reconstructed: ExportedReconstructedGeometry
+    dandling: ExportedReconstructedGeometry

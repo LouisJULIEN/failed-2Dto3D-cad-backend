@@ -39,7 +39,7 @@ def reconstruct_vertices(parsed_two_D_projections: Parsed2DProjections) \
 
                     if first_point.distance(second_point) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
                         first_point.attach_to_multiple_ancestors([an_xy_point, an_xz_point, an_yz_point])
-                        found_3D_points[three_d_point_id] = first_point
+                        found_3D_points[first_point.id] = first_point
                         an_xy_point.attach_to_ancestor(first_point)
                         an_xz_point.attach_to_ancestor(first_point)
                         an_yz_point.attach_to_ancestor(first_point)
