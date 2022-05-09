@@ -1,8 +1,8 @@
 from superclasses import LineStringWithId
-from type import Parsed2DProjections, Reconstructed3DPoints, Reconstructed3DEdges
+from type import Parsed2DProjections, Reconstructed3DVertices, Reconstructed3DEdges
 
 
-def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_points: Reconstructed3DPoints
+def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_points: Reconstructed3DVertices
                       ) -> (Reconstructed3DEdges, Reconstructed3DEdges):
     all_edges_projections = {}
     for a_projection in parsed_projections.values():
@@ -13,12 +13,12 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
     for an_edge_projection_id, an_edge_projection in all_edges_projections.items():
         # projected vertex have only one link, the 3D point
         reconstructed_edge_3D_points = [
-            list(a_projected_vertex_of_edge.links)[0] for a_projected_vertex_of_edge in an_edge_projection.links
+            list(a_projected_vertex_of_edge.ancestors)[0] for a_projected_vertex_of_edge in an_edge_projection.ancestors
         ]
 
         reconstructed_edges[an_edge_projection_id] = LineStringWithId(an_edge_projection_id,
                                                                       reconstructed_edge_3D_points)
-        reconstructed_edges[an_edge_projection_id].link_to(all_edges_projections[an_edge_projection_id])
+        reconstructed_edges[an_edge_projection_id].attach_to_ancestor(all_edges_projections[an_edge_projection_id])
         # TODO: add link projected vertex to reconstructed vertex
 
     def get_vertices_ids(edge):

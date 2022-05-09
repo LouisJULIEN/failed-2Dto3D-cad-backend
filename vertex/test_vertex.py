@@ -1,4 +1,4 @@
-from testers_vertex import TestersVertex
+from vertex.testers_vertex import TestersVertex
 
 
 def test_dandling():

@@ -1,13 +1,13 @@
 from graphics import draw_3D_points_list
 from preprocess.parse import parse_two_D_projections
-from vertex import reconstruct_vertices
+from vertex.vertex import reconstruct_vertices
 
 
 class TestersVertex:
     id_number = '0'
 
     @staticmethod
-    def __add_ids(input):
+    def __reformat(input):
         for an_axis_shapes in input.values():
 
             for a_shape_id, a_shape in an_axis_shapes.items():
@@ -17,7 +17,12 @@ class TestersVertex:
                     "type": a_shape["type"]
                 }
                 for a_point in a_shape["vertices"]:
-                    a_formatted_shape["vertices"][TestersVertex.id_number] = a_point
+                    a_formatted_shape["vertices"][TestersVertex.id_number] = {
+                        'x': a_point[0],
+                        'y': a_point[1],
+                        'z': a_point[2],
+                        'id': TestersVertex.id_number
+                    }
                     TestersVertex.id_number = str(int(TestersVertex.id_number) + 1)
                 an_axis_shapes[a_shape_id] = a_formatted_shape
 
@@ -25,7 +30,7 @@ class TestersVertex:
 
     @staticmethod
     def __parse_input(input):
-        input_with_ids = TestersVertex.__add_ids(input)
+        input_with_ids = TestersVertex.__reformat(input)
         return parse_two_D_projections(input_with_ids)
 
     @staticmethod

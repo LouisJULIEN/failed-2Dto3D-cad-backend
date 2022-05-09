@@ -1,32 +1,36 @@
 from typing import Dict, List, Tuple
 
-from edge import reconstruct_edges
+from edge.edge import reconstruct_edges
 from preprocess.parse import parse_two_D_projections
 from superclasses import PointWithId
-from type import Reconstructed3DPoints, Parsed2DProjections
+from type import Reconstructed3DVertices, Parsed2DProjections
 import unittest
 
 
 class TestersEdge:
     @staticmethod
-    def format_3_D_points(parsed_input: Parsed2DProjections, three_D_points: Dict[str, Tuple[int, int]]
-                          ) -> Reconstructed3DPoints:
+    def format_3_D_points(parsed_input: Parsed2DProjections, three_D_points: Dict[str, Tuple[str, str]]
+                          ) -> Reconstructed3DVertices:
         formatted_3D_points = {}
 
         all_vertices_projections = {}
         for a_projection in parsed_input.values():
             for a_shape in a_projection.values():
                 for a_vertex_id, a_vertex_point in a_shape['vertices'].items():
-                    all_vertices_projections[a_vertex_id] = a_vertex_point
+                    all_vertices_projections[a_vertex_id] = {
+                        'x': a_vertex_point[0],
+                        'y': a_vertex_point[1],
+                        'z': a_vertex_point[2],
+                    }
 
         for a_3D_point_id, projected_vertices_ids in three_D_points.items():
-            formatted_3D_points[a_3D_point_id] = PointWithId(a_3D_point_id, three_D_points[a_3D_point_id])
-            formatted_3D_points[a_3D_point_id].link_to_multiples([
+            formatted_3D_points[a_3D_point_id] = PointWithId(a_3D_point_id, all_vertices_projections[a_3D_point_id])
+            formatted_3D_points[a_3D_point_id].attach_to_multiple_ancestors([
                 all_vertices_projections[_id] for _id in projected_vertices_ids
             ])
 
             for a_projection_point_id in projected_vertices_ids:
-                all_vertices_projections[a_projection_point_id].link_to(formatted_3D_points[a_3D_point_id])
+                all_vertices_projections[a_projection_point_id].attach_to_ancestor(all_vertices_projections[a_3D_point_id])
 
         return formatted_3D_points
 

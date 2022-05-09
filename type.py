@@ -4,12 +4,13 @@ from superclasses import PointWithId, LineStringWithId
 
 
 class AnEdge(TypedDict):
-    verticesIds: Tuple[int, int]
+    verticesIds: Tuple[str, str]
 
 
 class AVertex(TypedDict):
-    x: int
-    y: int
+    x: float
+    y: float
+    z: float
 
 
 class Raw2DShape(TypedDict):
@@ -33,5 +34,29 @@ class Parsed2DProjections(TypedDict):
     yz: Dict[str, AParsedShape]
 
 
-Reconstructed3DPoints = Dict[str, PointWithId]
+Reconstructed3DVertices = Dict[str, PointWithId]
 Reconstructed3DEdges = Dict[str, LineStringWithId]
+
+
+class PointWithIdOutput(TypedDict):
+    id: str
+    x: float
+    y: float
+    z: float
+    twoDAncestorsIds: list
+
+
+class LineStringWithIdOutput(TypedDict):
+    id: str
+    twoDAncestorsIds: list
+    verticesIds: list
+
+
+class ReconstructedGeometry(TypedDict):
+    vertices: Dict[str, PointWithIdOutput]
+    edges: Dict[str, LineStringWithIdOutput]
+
+
+class Reconstructed3DModel(TypedDict):
+    reconstructed: ReconstructedGeometry
+    dandling: ReconstructedGeometry
