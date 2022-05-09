@@ -15,14 +15,14 @@ def parse_two_D_projections(two_D_projections: Raw2DProjections) -> Parsed2DProj
             }
 
             dict_of_parsed_edges = {}
-            for edge_id, points_id in a_shape["edges"].items():
+            for edge_id, edge_data in a_shape["edges"].items():
                 dict_of_parsed_edges[edge_id] = (
                     LineStringWithId(edge_id, [
-                        dict_of_parsed_vertices[a_point_id] for a_point_id in points_id['verticesIds']
+                        dict_of_parsed_vertices[a_point_id] for a_point_id in edge_data['verticesIds']
                     ])
                 )
                 dict_of_parsed_edges[edge_id].attach_to_multiple_ancestors([
-                    dict_of_parsed_vertices[a_point_id] for a_point_id in points_id
+                    dict_of_parsed_vertices[a_point_id] for a_point_id in edge_data['verticesIds']
                 ])
 
             parsed_two_D_projections[a_projection_axes][a_shape_id] = {

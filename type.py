@@ -1,10 +1,10 @@
-from typing import TypedDict, Dict, Tuple
+from typing import TypedDict, Dict, Tuple, List
 
 from superclasses import PointWithId, LineStringWithId
 
 
 class AnEdge(TypedDict):
-    verticesIds: Tuple[str, str]
+    verticesIds: List[str]
 
 
 class AVertex(TypedDict):
