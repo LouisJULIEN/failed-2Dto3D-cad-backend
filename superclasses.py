@@ -1,16 +1,13 @@
 from math import sqrt
 
-from shapely.geometry import Point, LineString, Polygon
+from shapely.geometry import Point, LineString
 
-
-# TODO: separate projected and 3D classes
-# TODO: switch to vanilla classes
-# TODO: rename links to better name (twoDAncestors)
 
 class AncestorWithId:
-    def __init__(self, _id: str):
+    def __init__(self, _id: str, ancestor_class=object):
         self.id = _id
         self.ancestors = set()
+        self.ancestors_class = ancestor_class
 
     def __hash__(self):
         return hash(self.id)
@@ -22,22 +19,27 @@ class AncestorWithId:
         return not self.__eq__(other)
 
     def attach_to_ancestor(self, new_link):
+        assert isinstance(new_link, self.ancestors_class)
         self.ancestors.add(new_link)
 
     def attach_to_multiple_ancestors(self, new_links: list):
+        for a_new_link in new_links:
+            assert isinstance(a_new_link, self.ancestors_class)
+
         self.ancestors.update(new_links)
 
     def has_no_ancestor(self) -> bool:
         return len(self.ancestors) == 0
 
     def remove_ancestor(self, link_to_remove):
+        assert isinstance(link_to_remove, self.ancestors_class)
         self.ancestors.remove(link_to_remove)
 
 
 class PointWithId(AncestorWithId, Point):
     def __init__(self, _id, *args):
         Point.__init__(self, *args)
-        AncestorWithId.__init__(self, _id)
+        AncestorWithId.__init__(self, _id, ancestor_class=PointWithId)
 
     def __str__(self):
         ancestors_ids = [f"{l.id} {list(l.coords)}" for l in self.ancestors]
@@ -57,10 +59,24 @@ class PointWithId(AncestorWithId, Point):
         }
 
 
-class LineStringWithId(AncestorWithId, LineString):
+class ProjectedLineStringWithId(AncestorWithId, LineString):
     def __init__(self, _id, *args, **kwargs):
         LineString.__init__(self, *args, **kwargs)
-        AncestorWithId.__init__(self, _id)
+        AncestorWithId.__init__(self, _id, ancestor_class=ThreeDLineStringWithId)
+        self.two_D_points = tuple(args[0])  # the id of the start and end points.
+
+    def export(self):
+        return {
+            'id': self.id,
+            'ancestorsIds': sorted([a.id for a in self.ancestors]),
+            'twoDPointsIds': sorted([pt.id for pt in self.two_D_points]),
+        }
+
+
+class ThreeDLineStringWithId(AncestorWithId, LineString):
+    def __init__(self, _id, *args, **kwargs):
+        LineString.__init__(self, *args, **kwargs)
+        AncestorWithId.__init__(self, _id, ancestor_class=ProjectedLineStringWithId)
         self.three_D_points = tuple(args[0])  # the id of the start and end points.
 
     def export(self):
@@ -69,9 +85,3 @@ class LineStringWithId(AncestorWithId, LineString):
             'ancestorsIds': sorted([a.id for a in self.ancestors]),
             'threeDPointsIds': sorted([pt.id for pt in self.three_D_points]),
         }
-
-
-class PolygonWithId(AncestorWithId, Polygon):
-    def __init__(self, _id, *args, **kwargs):
-        Polygon.__init__(self, *args, **kwargs)
-        AncestorWithId.__init__(self, _id)

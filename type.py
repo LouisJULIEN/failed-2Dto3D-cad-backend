@@ -1,6 +1,6 @@
-from typing import TypedDict, Dict, Tuple, List
+from typing import TypedDict, Dict, List
 
-from superclasses import PointWithId, LineStringWithId
+from superclasses import PointWithId, ProjectedLineStringWithId, ThreeDLineStringWithId
 
 
 class AnEdge(TypedDict):
@@ -23,7 +23,7 @@ Raw2DProjections = Dict[str, Dict[str, Raw2DShape]]  # projection[axes] -> shape
 
 
 class AParsedShape(TypedDict):
-    edges: Dict[str, LineStringWithId]
+    edges: Dict[str, ProjectedLineStringWithId]
     vertices: Dict[str, PointWithId]
     type: str
 
@@ -35,17 +35,23 @@ class Parsed2DProjections(TypedDict):
 
 
 Reconstructed3DVertices = Dict[str, PointWithId]
-Reconstructed3DEdges = Dict[str, LineStringWithId]
+Reconstructed3DEdges = Dict[str, ThreeDLineStringWithId]
+DandlingEdges = Dict[str, ProjectedLineStringWithId]
+
+
+class DandlingGeometry(TypedDict):
+    vertices: Reconstructed3DVertices
+    edges: DandlingEdges
 
 
 class ReconstructedGeometry(TypedDict):
-    vertices: Dict[str, PointWithId]
-    edges: Dict[str, LineStringWithId]
+    vertices: Reconstructed3DVertices
+    edges: Reconstructed3DEdges
 
 
 class Reconstructed3DModel(TypedDict):
     reconstructed: ReconstructedGeometry
-    dandling: ReconstructedGeometry
+    dandling: DandlingGeometry
 
 
 class ExportedPoint:

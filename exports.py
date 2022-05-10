@@ -1,11 +1,17 @@
 from typing import Dict
 
-from superclasses import PointWithId, LineStringWithId
+from superclasses import PointWithId, ThreeDLineStringWithId, ProjectedLineStringWithId
 from type import Reconstructed3DModel, ExportedPoint, ExportedLine
 
 
 def export_reconstructed_model(reconstructed_model: Reconstructed3DModel):
-    def export_edges(edges: Dict[str, LineStringWithId]) -> Dict[str, ExportedLine]:
+    def export_three_D_edges(edges: Dict[str, ThreeDLineStringWithId]) -> Dict[str, ExportedLine]:
+        exported_edges = {}
+        for (edge_id, edge) in edges.items():
+            exported_edges[edge_id] = edge.export()
+        return exported_edges
+
+    def export_dandling_edges(edges: Dict[str, ProjectedLineStringWithId]) -> Dict[str, ExportedLine]:
         exported_edges = {}
         for (edge_id, edge) in edges.items():
             exported_edges[edge_id] = edge.export()
@@ -20,11 +26,11 @@ def export_reconstructed_model(reconstructed_model: Reconstructed3DModel):
     return {
         **reconstructed_model,
         'reconstructed': {
-            'edges': export_edges(reconstructed_model['reconstructed']['edges']),
+            'edges': export_three_D_edges(reconstructed_model['reconstructed']['edges']),
             'vertices': export_vertices(reconstructed_model['reconstructed']['vertices']),
         },
         'dandling': {
-            'edges': export_edges(reconstructed_model['dandling']['edges']),
+            'edges': export_dandling_edges(reconstructed_model['dandling']['edges']),
             'vertices': export_vertices(reconstructed_model['dandling']['vertices']),
         },
     }

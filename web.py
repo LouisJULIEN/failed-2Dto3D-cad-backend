@@ -13,7 +13,7 @@ def health_check():
     return {'msg': 'ok'}
 
 
-@app.route("/version")
+@app.route("/version", methods=['GET'])
 def get_version():
     return {'version': 1.0}
 
@@ -28,12 +28,12 @@ raw_a_shape_projection_schema = {
         },
         'vertices': {
             'type': 'dict',
-            'keysrules': {'type': 'integer'},
+            'keysrules': {'type': 'string'},
             'allow_unknown': True,
         },
         'edges': {
             'type': 'dict',
-            'keysrules': {'type': 'integer'},
+            'keysrules': {'type': 'string'},
             'allow_unknown': True,
         },
     }
@@ -61,3 +61,7 @@ def reconstruct():
         return validator_reconstruct.errors, 400
 
     return two_D_to_three_D(parsed_payload)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
