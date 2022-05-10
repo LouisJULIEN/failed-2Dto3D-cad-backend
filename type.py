@@ -1,6 +1,6 @@
 from typing import TypedDict, Dict, List
 
-from superclasses import PointWithId, ProjectedLineStringWithId, ThreeDLineStringWithId
+from superclasses import ProjectedLineStringWithId, ThreeDLineStringWithId, TwoDPoint, ThreeDPoint
 
 
 class AnEdge(TypedDict):
@@ -24,7 +24,7 @@ Raw2DProjections = Dict[str, Dict[str, Raw2DShape]]  # projection[axes] -> shape
 
 class AParsedShape(TypedDict):
     edges: Dict[str, ProjectedLineStringWithId]
-    vertices: Dict[str, PointWithId]
+    vertices: Dict[str, TwoDPoint]
     type: str
 
 
@@ -34,7 +34,7 @@ class Parsed2DProjections(TypedDict):
     yz: Dict[str, AParsedShape]
 
 
-Reconstructed3DVertices = Dict[str, PointWithId]
+Reconstructed3DVertices = Dict[str, ThreeDPoint]
 Reconstructed3DEdges = Dict[str, ThreeDLineStringWithId]
 DandlingEdges = Dict[str, ProjectedLineStringWithId]
 

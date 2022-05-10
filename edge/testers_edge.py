@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from edge.edge import reconstruct_edges
 from preprocess.parse import parse_two_D_projections
-from superclasses import PointWithId
+from superclasses import ThreeDPoint
 from type import Reconstructed3DVertices, Parsed2DProjections
 import unittest
 
@@ -22,7 +22,7 @@ class TestersEdge:
 
         for a_3D_point_id, a_3D_point_data in three_D_points.items():
             # create 3D using three_D_points data
-            formatted_3D_points[a_3D_point_id] = PointWithId(
+            formatted_3D_points[a_3D_point_id] = ThreeDPoint(
                 a_3D_point_id,
                 a_3D_point_data['coords'])
             # link to actual ancestors

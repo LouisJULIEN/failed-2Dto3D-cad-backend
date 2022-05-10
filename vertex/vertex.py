@@ -1,7 +1,7 @@
 from typing import Tuple
 
 from constant import MAX_POINT_TO_POINT_ERROR_DISTANCE
-from superclasses import PointWithId
+from superclasses import TwoDPoint, ThreeDPoint
 from type import Parsed2DProjections, Reconstructed3DVertices
 
 
@@ -21,9 +21,9 @@ def reconstruct_vertices(parsed_two_D_projections: Parsed2DProjections) \
     edges_xz = get_all_vertices(parsed_two_D_projections['xz'])
 
     matched_a_3D_point: bool
-    an_xy_point: PointWithId
-    an_yz_point: PointWithId
-    an_xz_point: PointWithId
+    an_xy_point: TwoDPoint
+    an_yz_point: TwoDPoint
+    an_xz_point: TwoDPoint
 
     three_d_point_id = '10000'
 
@@ -32,9 +32,9 @@ def reconstruct_vertices(parsed_two_D_projections: Parsed2DProjections) \
             if abs(an_xy_point.y - an_yz_point.y) < MAX_POINT_TO_POINT_ERROR_DISTANCE:  # to lower computation cost
                 for an_xz_point in edges_xz:
 
-                    first_point = PointWithId(three_d_point_id, an_xy_point.x, an_yz_point.y, an_xz_point.z)
+                    first_point = ThreeDPoint(three_d_point_id, an_xy_point.x, an_yz_point.y, an_xz_point.z)
                     three_d_point_id = str(int(three_d_point_id) + 1)
-                    second_point = PointWithId(three_d_point_id, an_xz_point.x, an_xy_point.y, an_yz_point.z)
+                    second_point = ThreeDPoint(three_d_point_id, an_xz_point.x, an_xy_point.y, an_yz_point.z)
                     three_d_point_id = str(int(three_d_point_id) + 1)
 
                     if first_point.distance(second_point) < MAX_POINT_TO_POINT_ERROR_DISTANCE:

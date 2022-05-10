@@ -1,6 +1,6 @@
 from typing import Dict
 
-from superclasses import PointWithId, ThreeDLineStringWithId, ProjectedLineStringWithId
+from superclasses import ThreeDLineStringWithId, ProjectedLineStringWithId, ThreeDPoint
 from type import Reconstructed3DModel, ExportedPoint, ExportedLine
 
 
@@ -17,7 +17,7 @@ def export_reconstructed_model(reconstructed_model: Reconstructed3DModel):
             exported_edges[edge_id] = edge.export()
         return exported_edges
 
-    def export_vertices(vertices: Dict[str, PointWithId]) -> Dict[str, ExportedPoint]:
+    def export_vertices(vertices: Dict[str, ThreeDPoint]) -> Dict[str, ExportedPoint]:
         exported_vertices = {}
         for (vertex_id, vertex_object) in vertices.items():
             exported_vertices[vertex_id] = vertex_object.export()

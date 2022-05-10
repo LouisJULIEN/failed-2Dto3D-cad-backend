@@ -36,10 +36,10 @@ class AncestorWithId:
         self.ancestors.remove(link_to_remove)
 
 
-class PointWithId(AncestorWithId, Point):
+class __PointWithId(AncestorWithId, Point):
     def __init__(self, _id, *args):
         Point.__init__(self, *args)
-        AncestorWithId.__init__(self, _id, ancestor_class=PointWithId)
+        AncestorWithId.__init__(self, _id, ancestor_class=__PointWithId)
 
     def __str__(self):
         ancestors_ids = [f"{l.id} {list(l.coords)}" for l in self.ancestors]
@@ -59,6 +59,18 @@ class PointWithId(AncestorWithId, Point):
         }
 
 
+class ThreeDPoint(__PointWithId):
+    def __init__(self, _id, *args):
+        Point.__init__(self, *args)
+        AncestorWithId.__init__(self, _id, ancestor_class=TwoDPoint)
+
+
+class TwoDPoint(__PointWithId):
+    def __init__(self, _id, *args):
+        Point.__init__(self, *args)
+        AncestorWithId.__init__(self, _id, ancestor_class=ThreeDPoint)
+
+
 class ProjectedLineStringWithId(AncestorWithId, LineString):
     def __init__(self, _id, *args, **kwargs):
         LineString.__init__(self, *args, **kwargs)
@@ -71,6 +83,10 @@ class ProjectedLineStringWithId(AncestorWithId, LineString):
             'ancestorsIds': sorted([a.id for a in self.ancestors]),
             'twoDPointsIds': sorted([pt.id for pt in self.two_D_points]),
         }
+
+    def __str__(self):
+        two_d_points = sorted([f"{pt.id} at ({pt.x};{pt.y};{pt.z})" for pt in self.two_D_points])
+        return f"2D edge {self.id} with points {two_d_points}"
 
 
 class ThreeDLineStringWithId(AncestorWithId, LineString):
@@ -85,3 +101,7 @@ class ThreeDLineStringWithId(AncestorWithId, LineString):
             'ancestorsIds': sorted([a.id for a in self.ancestors]),
             'threeDPointsIds': sorted([pt.id for pt in self.three_D_points]),
         }
+
+    def __str__(self):
+        three_d_points = sorted([f"{pt.id} at ({pt.x};{pt.y};{pt.z})" for pt in self.three_D_points])
+        return f"3D edge {self.id} with points {three_d_points}"

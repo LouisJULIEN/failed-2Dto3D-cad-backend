@@ -1,4 +1,4 @@
-from superclasses import PointWithId, ProjectedLineStringWithId
+from superclasses import ProjectedLineStringWithId, TwoDPoint
 from type import Parsed2DProjections, Raw2DShape, Raw2DProjections
 
 
@@ -11,7 +11,7 @@ def parse_two_D_projections(two_D_projections: Raw2DProjections) -> Parsed2DProj
         for a_shape_id, a_shape in a_projection.items():
 
             dict_of_parsed_vertices = {
-                _id: PointWithId(_id, (a_vertex['x'], a_vertex['y'], a_vertex['z'])) for _id, a_vertex in a_shape["vertices"].items()
+                _id: TwoDPoint(_id, (a_vertex['x'], a_vertex['y'], a_vertex['z'])) for _id, a_vertex in a_shape["vertices"].items()
             }
 
             dict_of_parsed_edges = {}
