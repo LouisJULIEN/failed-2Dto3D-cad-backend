@@ -1,5 +1,6 @@
 from typing import Dict
 
+from constant import MAX_POINT_TO_POINT_ERROR_DISTANCE
 from superclasses import ThreeDLineStringWithId, ProjectedLineStringWithId
 from type import Parsed2DProjections, Reconstructed3DVertices, Reconstructed3DEdges
 
@@ -36,10 +37,10 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
     def get_vertices_ids(edge):
         return [pt.id for pt in edge.three_D_points]
 
-    reconstructed_edges_list = list(reconstructed_edges.values())
+    reconstructed_edges_list = list(reconstructed_edges.values())  # it copies values
     reconstructed_edges_list.sort(key=get_vertices_ids)
 
-    print('found ', len(reconstructed_edges_list))
+    # remove duplicate edge
     for i in range(len(reconstructed_edges_list) - 1):
         if get_vertices_ids(reconstructed_edges_list[i]) == get_vertices_ids(reconstructed_edges_list[i + 1]):
             reconstructed_edges_list[i].attach_to_multiple_ancestors(reconstructed_edges_list[i + 1].ancestors)
@@ -52,6 +53,52 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
 
             del reconstructed_edges[reconstructed_edges_list[i + 1].id]
 
-    # TODO: remove edges that are not coherent
+    point_to_points_edge_map = generate_2D_point_to_point_edge_map(parsed_projections)
+
+    for edge_id in list(reconstructed_edges.keys()):
+        if not edge_is_consistent(reconstructed_edges[edge_id], point_to_points_edge_map):
+            del reconstructed_edges[edge_id]
 
     return reconstructed_edges, {}
+
+
+def generate_2D_point_to_point_edge_map(parsed_projections: Parsed2DProjections):
+    two_D_point_to_points = {}
+    for an_axe, a_shape_data in parsed_projections.items():
+        axes_points = {}
+
+        for a_shape in a_shape_data.values():
+            for an_edge in a_shape['edges'].values():
+                for a_pt in an_edge.two_D_points:
+                    a_pt_id = a_pt.id
+                    if a_pt_id not in axes_points.keys():
+                        axes_points[a_pt_id] = []
+                    axes_points[a_pt_id] += [p.id for p in an_edge.two_D_points]
+
+        two_D_point_to_points[an_axe] = axes_points
+    return two_D_point_to_points
+
+
+def edge_is_consistent(reconstructed_edge: ThreeDLineStringWithId, point_to_points_edge_map):
+    if abs(reconstructed_edge.three_D_points[0].x - reconstructed_edge.three_D_points[
+        1].x) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
+        for an_ancestor in reconstructed_edge.ancestors:
+            pt_first, pt_second = an_ancestor.two_D_points[0], an_ancestor.two_D_points[1]
+            if pt_first.id in point_to_points_edge_map['yz'].get(pt_second.id, []):
+                return True
+
+    if abs(reconstructed_edge.three_D_points[0].y - reconstructed_edge.three_D_points[
+        1].y) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
+        for an_ancestor in reconstructed_edge.ancestors:
+            pt_first, pt_second = an_ancestor.two_D_points[0], an_ancestor.two_D_points[1]
+            if pt_first.id in point_to_points_edge_map['xz'].get(pt_second.id, []):
+                return True
+
+    if abs(reconstructed_edge.three_D_points[0].z - reconstructed_edge.three_D_points[
+        1].z) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
+        for an_ancestor in reconstructed_edge.ancestors:
+            pt_first, pt_second = an_ancestor.two_D_points[0], an_ancestor.two_D_points[1]
+            if pt_first.id in point_to_points_edge_map['xy'].get(pt_second.id, []):
+                return True
+
+    return False

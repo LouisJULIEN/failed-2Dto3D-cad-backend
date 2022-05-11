@@ -1,7 +1,7 @@
 from main import two_D_to_three_D
 
 
-def skip_test_three_points_two_vertices_e2e():
+def test_three_points_two_vertices_e2e():
     result = two_D_to_three_D({
         'xy': {'1': {
             "vertices": {
@@ -37,11 +37,16 @@ def skip_test_three_points_two_vertices_e2e():
     })
     expected = {
         'reconstructed': {
-            'edges': {'1': {'id': '1', 'ancestorsIds': ['1', '5'], 'threeDPointsIds': ['10000', '10002']},
-                      '2': {'id': '2', 'ancestorsIds': ['2', '6'], 'threeDPointsIds': ['10002', '10004']}},
-            'vertices': {'10000': {'id': '10000', 'ancestorsIds': ['1', '3', '7'], 'x': 0.0, 'y': 0.0, 'z': 0.0},
-                         '10002': {'id': '10002', 'ancestorsIds': ['2', '4', '7'], 'x': 0.0, 'y': 1.0, 'z': 0.0},
-                         '10004': {'id': '10004', 'ancestorsIds': ['5', '6', '7'], 'x': 0.0, 'y': 4.0, 'z': 0.0}}},
+            'edges': {'100000': {'ancestorsIds': ['1', '5'],
+                                 'id': '100000',
+                                 'threeDPointsIds': ['10000', '10002']},
+                      '100001': {'ancestorsIds': ['2', '6'],
+                                 'id': '100001',
+                                 'threeDPointsIds': ['10002', '10004']}},
+            'vertices': {
+                '10000': {'id': '10000', 'ancestorsIds': ['1', '3', '7'], 'x': 0.0, 'y': 0.0, 'z': 0.0},
+                '10002': {'id': '10002', 'ancestorsIds': ['2', '4', '7'], 'x': 0.0, 'y': 1.0, 'z': 0.0},
+                '10004': {'id': '10004', 'ancestorsIds': ['5', '6', '7'], 'x': 0.0, 'y': 4.0, 'z': 0.0}}},
         'dandling': {'edges': {}, 'vertices': {}}}
 
     assert result == expected
@@ -99,30 +104,42 @@ def test_small_square_e2e():
     # should have 12 edges
     expected = {'dandling': {'edges': {}, 'vertices': {}},
                 'reconstructed': {
-                    'edges': {'e1': {'ancestorsIds': ['e1', 'e14'],
-                                     'id': 'e1',
-                                     'threeDPointsIds': ['10014', '10018']},
-                              'e11': {'ancestorsIds': ['e11', 'e21'],
-                                      'id': 'e11',
-                                      'threeDPointsIds': ['10018', '10048']},
-                              'e13': {'ancestorsIds': ['e13'],
-                                      'id': 'e13',
-                                      'threeDPointsIds': ['10014', '10044']},
-                              'e2': {'ancestorsIds': ['e2', 'e22'],
-                                     'id': 'e2',
-                                     'threeDPointsIds': ['10018', '10044']},
-                              'e23': {'ancestorsIds': ['e23'],
-                                      'id': 'e23',
-                                      'threeDPointsIds': ['10044', '10062']},
-                              'e24': {'ancestorsIds': ['e24'],
-                                      'id': 'e24',
-                                      'threeDPointsIds': ['10048', '10062']},
-                              'e3': {'ancestorsIds': ['e12', 'e3'],
-                                     'id': 'e3',
-                                     'threeDPointsIds': ['10044', '10048']},
-                              'e4': {'ancestorsIds': ['e4'],
-                                     'id': 'e4',
-                                     'threeDPointsIds': ['10014', '10048']}},
+                    'edges': {'100000': {'ancestorsIds': ['e1', 'e21'],
+                                         'id': '100000',
+                                         'threeDPointsIds': ['10000', '10018']},
+                              '100003': {'ancestorsIds': ['e1', 'e23'],
+                                         'id': '100003',
+                                         'threeDPointsIds': ['10014', '10028']},
+                              '100004': {'ancestorsIds': ['e11', 'e2'],
+                                         'id': '100004',
+                                         'threeDPointsIds': ['10018', '10034']},
+                              '100007': {'ancestorsIds': ['e13', 'e2'],
+                                         'id': '100007',
+                                         'threeDPointsIds': ['10028', '10044']},
+                              '100008': {'ancestorsIds': ['e21', 'e3'],
+                                         'id': '100008',
+                                         'threeDPointsIds': ['10034', '10048']},
+                              '100011': {'ancestorsIds': ['e23', 'e3'],
+                                         'id': '100011',
+                                         'threeDPointsIds': ['10044', '10062']},
+                              '100012': {'ancestorsIds': ['e11', 'e4'],
+                                         'id': '100012',
+                                         'threeDPointsIds': ['10000', '10048']},
+                              '100015': {'ancestorsIds': ['e13', 'e4'],
+                                         'id': '100015',
+                                         'threeDPointsIds': ['10014', '10062']},
+                              '100020': {'ancestorsIds': ['e12', 'e22'],
+                                         'id': '100020',
+                                         'threeDPointsIds': ['10034', '10044']},
+                              '100023': {'ancestorsIds': ['e12', 'e24'],
+                                         'id': '100023',
+                                         'threeDPointsIds': ['10048', '10062']},
+                              '100028': {'ancestorsIds': ['e14', 'e24'],
+                                         'id': '100028',
+                                         'threeDPointsIds': ['10000', '10014']},
+                              '100031': {'ancestorsIds': ['e14', 'e22'],
+                                         'id': '100031',
+                                         'threeDPointsIds': ['10018', '10028']}},
                     'vertices': {'10000': {'ancestorsIds': ['v1', 'v11', 'v21'],
                                            'id': '10000',
                                            'x': 0.0,

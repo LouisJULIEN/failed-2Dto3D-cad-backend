@@ -93,7 +93,7 @@ class ThreeDLineStringWithId(AncestorWithId, LineString):
     def __init__(self, _id, *args, **kwargs):
         LineString.__init__(self, *args, **kwargs)
         AncestorWithId.__init__(self, _id, ancestor_class=ProjectedLineStringWithId)
-        self.three_D_points = tuple(args[0])  # the id of the start and end points.
+        self.three_D_points = tuple(sorted(args[0], key=lambda x: x.id))  # the id of the start and end point
 
     def export(self):
         return {
