@@ -57,9 +57,17 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
 
     for edge_id in list(reconstructed_edges.keys()):
         if not edge_is_consistent(reconstructed_edges[edge_id], point_to_points_edge_map):
+
+            for a_projected_edge in reconstructed_edges[edge_id].ancestors:
+                a_projected_edge.remove_ancestor(reconstructed_edges[edge_id])
             del reconstructed_edges[edge_id]
 
-    return reconstructed_edges, {}
+    dangling_edges = {}
+    for an_edge_projection_id, an_edge_projection in all_edges_projections.items():
+        if len(an_edge_projection.ancestors) == 0:
+            dangling_edges[an_edge_projection_id] = an_edge_projection
+
+    return reconstructed_edges, dangling_edges
 
 
 def generate_2D_point_to_point_edge_map(parsed_projections: Parsed2DProjections):

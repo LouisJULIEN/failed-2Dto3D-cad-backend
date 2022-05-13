@@ -1,5 +1,5 @@
 # failed-2Dto3D-cad-backend
-The goal is to make a 3D model from 2D projections. It currently works only for a square.
+The goal is to make a 3D model from 2D projections. It currently works only for a square almost for a square based pyramid.
 Vertices and edges are reconstructed, not faces and solids.
 This project is stopped.
 Frontend is failed-2Dto3D-cad-frontend, go there for screenshots.

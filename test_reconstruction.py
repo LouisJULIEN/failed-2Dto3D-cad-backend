@@ -1,3 +1,5 @@
+import json
+
 from main import two_D_to_three_D
 
 
@@ -233,45 +235,19 @@ def skip_test_pyramid_triangle_base_e2e():
         }}
     })
 
-    print(result)
+    print(json.dumps(result))
     assert False
 
 
-def skip_test_pyramid_square_base_e2e():
+def test_pyramid_square_base_e2e():
     result = two_D_to_three_D({
-        'xy': {'1': {
-            "vertices": {
-                '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                '2': {'x': 1.0, 'y': 2.0, 'z': 0.0},
-                '5': {'x': 0.0, 'y': 2.0, 'z': 0.0},
-            },
-            "edges": {
-                '1': {'verticesIds': ['1', '2']},
-                '2': {'verticesIds': ['2', '5']},
-                '3': {'verticesIds': ['5', '1']},
-            },
-            "type": "polygon",
-        }},
-        'yz': {'2': {
-            "vertices": {
-                '11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                '12': {'x': 1.0, 'y': 2.0, 'z': 0.0},
-                '13': {'x': 0.0, 'y': 2.0, 'z': 0.0},
-            },
-            "edges": {
-                '5': {'verticesIds': ['11', '12']},
-                '6': {'verticesIds': ['12', '13']},
-                '7': {'verticesIds': ['13', '11']},
-            },
-            "type": "polygon",
-        }},
-        'xz': {'3': {
+        'xy': {'3': {
             "vertices": {
                 '21': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                '22': {'x': 0.0, 'y': 0.0, 'z': 2.0},
-                '23': {'x': 2.0, 'y': 0.0, 'z': 2.0},
+                '22': {'x': 0.0, 'y': 2.0, 'z': 0.0},
+                '23': {'x': 2.0, 'y': 2.0, 'z': 0.0},
                 '24': {'x': 2.0, 'y': 0.0, 'z': 0.0},
-                '25': {'x': 1.0, 'y': 0.0, 'z': 1.0},  # top pyramid
+                '25': {'x': 1.0, 'y': 1.0, 'z': 0.0},  # top pyramid
             },
             "edges": {
                 # outer edges
@@ -286,8 +262,35 @@ def skip_test_pyramid_square_base_e2e():
                 '29': {'verticesIds': ['24', '25']},
             },
             "type": "polygon",
-        }}
+        }},
+        'xz': {'1': {
+            "vertices": {
+                '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+                '2': {'x': 1.0, 'y': 0.0, 'z': 2.0},
+                '5': {'x': 2.0, 'y': 0.0, 'z': 0.0},
+            },
+            "edges": {
+                '1': {'verticesIds': ['1', '2']},
+                '2': {'verticesIds': ['2', '5']},
+                '3': {'verticesIds': ['5', '1']},
+            },
+            "type": "polygon",
+        }},
+        'yz': {'2': {
+            "vertices": {
+                '11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+                '12': {'x': 0.0, 'y': 1.0, 'z': 2.0},
+                '13': {'x': 0.0, 'y': 2.0, 'z': 0.0},
+            },
+            "edges": {
+                '5': {'verticesIds': ['11', '12']},
+                '6': {'verticesIds': ['12', '13']},
+                '7': {'verticesIds': ['13', '11']},
+            },
+            "type": "polygon",
+        }},
     })
 
-    print(result)
-    assert False
+    print(json.dumps(result))
+    assert len(result['reconstructed']['vertices'].keys()) == 5
+    assert len(result['reconstructed']['edges'].keys()) == 8
