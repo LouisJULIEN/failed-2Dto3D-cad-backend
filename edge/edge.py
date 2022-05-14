@@ -9,8 +9,7 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
                       ) -> (Reconstructed3DEdges, Reconstructed3DEdges):
     all_edges_projections: Dict[str, ProjectedLineStringWithId] = {}
     for a_projection in parsed_projections.values():
-        for a_shape in a_projection.values():
-            all_edges_projections.update(a_shape['edges'])
+        all_edges_projections.update(a_projection['edges'])
 
     reconstruct_edge_id = '100000'
 
@@ -72,16 +71,15 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
 
 def generate_2D_point_to_point_edge_map(parsed_projections: Parsed2DProjections):
     two_D_point_to_points = {}
-    for an_axe, a_shape_data in parsed_projections.items():
+    for an_axe, a_shape in parsed_projections.items():
         axes_points = {}
 
-        for a_shape in a_shape_data.values():
-            for an_edge in a_shape['edges'].values():
-                for a_pt in an_edge.two_D_points:
-                    a_pt_id = a_pt.id
-                    if a_pt_id not in axes_points.keys():
-                        axes_points[a_pt_id] = []
-                    axes_points[a_pt_id] += [p.id for p in an_edge.two_D_points]
+        for an_edge in a_shape['edges'].values():
+            for a_pt in an_edge.two_D_points:
+                a_pt_id = a_pt.id
+                if a_pt_id not in axes_points.keys():
+                    axes_points[a_pt_id] = []
+                axes_points[a_pt_id] += [p.id for p in an_edge.two_D_points]
 
         two_D_point_to_points[an_axe] = axes_points
     return two_D_point_to_points

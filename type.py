@@ -14,12 +14,13 @@ class AVertex(TypedDict):
 
 
 class Raw2DShape(TypedDict):
+    # a shape is made up of vertices linked by edges. Edges can be cyclic or acyclic, joint or disjointed.
     type: str
     vertices: Dict[str, AVertex]
     edges: Dict[str, AnEdge]
 
 
-Raw2DProjections = Dict[str, Dict[str, Raw2DShape]]  # projection[axes] -> shape[id] -> [edge, vertices, faces]
+Raw2DProjections = Dict[str, Raw2DShape]  # projection[axes] -> shape[id] -> [edge, vertices, faces]
 
 
 class AParsedShape(TypedDict):
@@ -29,9 +30,9 @@ class AParsedShape(TypedDict):
 
 
 class Parsed2DProjections(TypedDict):
-    xy: Dict[str, AParsedShape]  # shapeId -> shapeData (for projections face = shape)
-    xz: Dict[str, AParsedShape]
-    yz: Dict[str, AParsedShape]
+    xy: AParsedShape
+    xz: AParsedShape
+    yz: AParsedShape
 
 
 Reconstructed3DVertices = Dict[str, ThreeDPoint]

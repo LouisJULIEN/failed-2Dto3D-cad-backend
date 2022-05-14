@@ -8,23 +8,22 @@ class TestersVertex:
 
     @staticmethod
     def __reformat(input):
-        for an_axis_shapes in input.values():
+        for an_axis, a_shape in input.items():
 
-            for a_shape_id, a_shape in an_axis_shapes.items():
-                a_formatted_shape = {
-                    "edges": {},
-                    "vertices": {},
-                    "type": a_shape["type"]
+            a_formatted_shape = {
+                "edges": {},
+                "vertices": {},
+                "type": a_shape["type"]
+            }
+            for a_point in a_shape["vertices"]:
+                a_formatted_shape["vertices"][TestersVertex.id_number] = {
+                    'x': a_point[0],
+                    'y': a_point[1],
+                    'z': a_point[2],
+                    'id': TestersVertex.id_number
                 }
-                for a_point in a_shape["vertices"]:
-                    a_formatted_shape["vertices"][TestersVertex.id_number] = {
-                        'x': a_point[0],
-                        'y': a_point[1],
-                        'z': a_point[2],
-                        'id': TestersVertex.id_number
-                    }
-                    TestersVertex.id_number = str(int(TestersVertex.id_number) + 1)
-                an_axis_shapes[a_shape_id] = a_formatted_shape
+                TestersVertex.id_number = str(int(TestersVertex.id_number) + 1)
+            input[an_axis] = a_formatted_shape
 
         return input
 

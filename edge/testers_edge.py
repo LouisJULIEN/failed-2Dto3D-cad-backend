@@ -15,10 +15,9 @@ class TestersEdge:
 
         # have all projected vertices. Used to link to ancestor later
         all_vertices_projections = {}
-        for a_projection in parsed_input.values():
-            for a_shape in a_projection.values():
-                for a_vertex_id, a_vertex_point in a_shape['vertices'].items():
-                    all_vertices_projections[a_vertex_id] = a_vertex_point
+        for a_projection, a_shape in parsed_input.items():
+            for a_vertex_id, a_vertex_point in a_shape['vertices'].items():
+                all_vertices_projections[a_vertex_id] = a_vertex_point
 
         for a_3D_point_id, a_3D_point_data in three_D_points.items():
             # create 3D using three_D_points data

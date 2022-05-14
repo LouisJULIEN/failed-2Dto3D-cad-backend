@@ -3,7 +3,7 @@ from edge.testers_edge import TestersEdge
 
 def test_two_points():
     TestersEdge.reconstruct_edges({
-        'xy': {'1': {
+        'xy': {
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '2': {'x': 0.0, 'y': 1.0, 'z': 0.0}
@@ -12,8 +12,8 @@ def test_two_points():
                 '1': {'verticesIds': ['1', '2']}
             },
             "type": "polygon"
-        }},
-        'yz': {2: {
+        },
+        'yz': {
             "vertices": {
                 '3': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '4': {'x': 0.0, 'y': 1.0, 'z': 0.0},
@@ -21,9 +21,13 @@ def test_two_points():
             "edges": {
                 '5': {'verticesIds': ['3', '4']}
             },
-            "type": "polygon"
-        }},
-        'xz': {}
+            "type": "polygon",
+        },
+        'xz': {
+            "vertices": {},
+            "edges": {},
+            "type": "polygon",
+        }
     }, {
         '10': {
             'coords': [0.0, 0.0, 0.0],
@@ -38,7 +42,7 @@ def test_two_points():
 
 def test_three_points_two_vertices():
     TestersEdge.reconstruct_edges({
-        'xy': {'1': {
+        'xy': {
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '2': {'x': 0.0, 'y': 1.0, 'z': 0.0},
@@ -49,8 +53,8 @@ def test_three_points_two_vertices():
                 '2': {'verticesIds': ['2', '5']},
             },
             "type": "polygon"
-        }},
-        'yz': {'2': {
+        },
+        'yz': {
             "vertices": {
                 '3': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '4': {'x': 0.0, 'y': 1.0, 'z': 0.0},
@@ -61,8 +65,12 @@ def test_three_points_two_vertices():
                 '6': {'verticesIds': ['4', '6']},
             },
             "type": "polygon"
-        }},
-        'xz': {}
+        },
+        'xz': {
+            "vertices": {},
+            "edges": {},
+            "type": "polygon",
+        }
     }, {
         '10': {
             'ancestors': ['1', '3'],

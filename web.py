@@ -6,7 +6,7 @@ from main import two_D_to_three_D
 app = Flask(__name__)
 
 
-# FLASK_ENV=development FLASK_APP=web flask run
+#  python web.py
 
 @app.route("/health-check", methods=['GET'])
 def health_check():
@@ -39,16 +39,10 @@ raw_a_shape_projection_schema = {
     }
 }
 
-raw_projection_schema = {
-    'type': 'dict',
-    'keysrules': {'type': 'string', 'regex': '[a-z0-9-]+'},
-    'valuesrules': raw_a_shape_projection_schema,
-}
-
 raw_two_D_schema = {
-    'xy': raw_projection_schema,
-    'xz': raw_projection_schema,
-    'yz': raw_projection_schema,
+    'xy': raw_a_shape_projection_schema,
+    'xz': raw_a_shape_projection_schema,
+    'yz': raw_a_shape_projection_schema,
 }
 
 validator_reconstruct = Validator(raw_two_D_schema)

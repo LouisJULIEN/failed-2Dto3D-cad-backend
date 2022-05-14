@@ -5,7 +5,7 @@ from main import two_D_to_three_D
 
 def test_three_points_two_vertices_e2e():
     result = two_D_to_three_D({
-        'xy': {'1': {
+        'xy': {
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '2': {'x': 0.0, 'y': 1.0, 'z': 0.0},
@@ -16,8 +16,8 @@ def test_three_points_two_vertices_e2e():
                 '2': {'verticesIds': ['2', '5']},
             },
             "type": "polygon",
-        }},
-        'yz': {'2': {
+        },
+        'yz': {
             "vertices": {
                 '3': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '4': {'x': 0.0, 'y': 1.0, 'z': 0.0},
@@ -28,14 +28,14 @@ def test_three_points_two_vertices_e2e():
                 '6': {'verticesIds': ['4', '6']},
             },
             "type": "polygon",
-        }},
-        'xz': {'3': {
+        },
+        'xz': {
             "vertices": {
                 '7': {'x': 0.0, 'y': 0.0, 'z': 0.0},
             },
             "edges": {},
             "type": "polygon",
-        }}
+        }
     })
     expected = {
         'reconstructed': {
@@ -56,7 +56,7 @@ def test_three_points_two_vertices_e2e():
 
 def test_small_square_e2e():
     result = two_D_to_three_D({
-        'xy': {'1': {
+        'xy': {
             "vertices": {
                 'v1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 'v2': {'x': 1.0, 'y': 0.0, 'z': 0.0},
@@ -70,8 +70,8 @@ def test_small_square_e2e():
                 'e4': {'verticesIds': ['v4', 'v1']},
             },
             "type": "polygon",
-        }},
-        'yz': {'2': {
+        },
+        'yz': {
             "vertices": {
                 'v11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 'v12': {'x': 0.0, 'y': 1.0, 'z': 0.0},
@@ -85,8 +85,8 @@ def test_small_square_e2e():
                 'e14': {'verticesIds': ['v14', 'v11']},
             },
             "type": "polygon",
-        }},
-        'xz': {'3': {
+        },
+        'xz': {
             "vertices": {
                 'v21': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 'v22': {'x': 1.0, 'y': 0.0, 'z': 0.0},
@@ -100,7 +100,7 @@ def test_small_square_e2e():
                 'e24': {'verticesIds': ['v24', 'v21']},
             },
             "type": "polygon",
-        }}
+        }
     })
 
     # should have 12 edges
@@ -188,7 +188,7 @@ def test_small_square_e2e():
 
 def test_pyramid_right_triangle_base_e2e():
     result = two_D_to_three_D({
-        'xy': {'1': {
+        'xy': {
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '2': {'x': 2.0, 'y': 0.0, 'z': 0.0},
@@ -205,8 +205,8 @@ def test_pyramid_right_triangle_base_e2e():
                 '7': {'verticesIds': ['3', '5']},
             },
             "type": "polygon",
-        }},
-        'xz': {'3': {
+        },
+        'xz': {
             "vertices": {
                 '21': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '22': {'x': 2.0, 'y': 0.0, 'z': 0.0},
@@ -219,8 +219,8 @@ def test_pyramid_right_triangle_base_e2e():
                 '23': {'verticesIds': ['23', '21']},
             },
             "type": "polygon",
-        }},
-        'yz': {'2': {
+        },
+        'yz': {
             "vertices": {
                 '11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '12': {'x': 0.0, 'y': 2.0, 'z': 0.0},
@@ -232,7 +232,7 @@ def test_pyramid_right_triangle_base_e2e():
                 '17': {'verticesIds': ['13', '11']},
             },
             "type": "polygon",
-        }},
+        },
     })
 
     print(json.dumps(result))
@@ -245,7 +245,7 @@ def test_pyramid_right_triangle_base_e2e():
 
 def test_pyramid_square_base_e2e():
     result = two_D_to_three_D({
-        'xy': {'3': {
+        'xy': {
             "vertices": {
                 '21': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '22': {'x': 0.0, 'y': 2.0, 'z': 0.0},
@@ -266,8 +266,8 @@ def test_pyramid_square_base_e2e():
                 '29': {'verticesIds': ['24', '25']},
             },
             "type": "polygon",
-        }},
-        'xz': {'1': {
+        },
+        'xz': {
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '2': {'x': 1.0, 'y': 0.0, 'z': 2.0},
@@ -279,8 +279,8 @@ def test_pyramid_square_base_e2e():
                 '3': {'verticesIds': ['3', '1']},
             },
             "type": "polygon",
-        }},
-        'yz': {'2': {
+        },
+        'yz': {
             "vertices": {
                 '11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '12': {'x': 0.0, 'y': 1.0, 'z': 2.0},
@@ -292,7 +292,7 @@ def test_pyramid_square_base_e2e():
                 '7': {'verticesIds': ['13', '11']},
             },
             "type": "polygon",
-        }},
+        },
     })
 
     assert len(result['dandling']['vertices'].keys()) == 0

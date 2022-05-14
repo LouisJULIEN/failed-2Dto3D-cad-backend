@@ -6,10 +6,7 @@ from type import Parsed2DProjections, Reconstructed3DVertices
 
 
 def get_all_vertices(a_projection):
-    all_vertices = []
-    for a_shape in a_projection.values():
-        all_vertices += a_shape['vertices'].values()
-    return all_vertices
+    return list(a_projection['vertices'].values())
 
 
 def reconstruct_vertices(parsed_two_D_projections: Parsed2DProjections) \
