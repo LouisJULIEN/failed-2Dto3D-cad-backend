@@ -1,12 +1,16 @@
+import os
+
 from cerberus import Validator
 from flask import Flask, request
+from flask_cors import CORS
 
 from main import two_D_to_three_D
 
 app = Flask(__name__)
+# > APP_ENV=local python web.py
 
-
-#  python web.py
+if os.environ.get('APP_ENV') == 'local':
+    cors = CORS(app)
 
 @app.route("/health-check", methods=['GET'])
 def health_check():
