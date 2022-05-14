@@ -57,7 +57,7 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
 
     for edge_id in list(reconstructed_edges.keys()):
         if not edge_is_consistent(reconstructed_edges[edge_id], point_to_points_edge_map):
-
+            print('removing inconsistent edge', reconstructed_edges[edge_id].three_D_points)
             for a_projected_edge in reconstructed_edges[edge_id].ancestors:
                 a_projected_edge.remove_ancestor(reconstructed_edges[edge_id])
             del reconstructed_edges[edge_id]
@@ -88,8 +88,11 @@ def generate_2D_point_to_point_edge_map(parsed_projections: Parsed2DProjections)
 
 
 def edge_is_consistent(reconstructed_edge: ThreeDLineStringWithId, point_to_points_edge_map):
+    was_checked_at_least_once = False
+
     if abs(reconstructed_edge.three_D_points[0].x - reconstructed_edge.three_D_points[
         1].x) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
+        was_checked_at_least_once = True
         for an_ancestor in reconstructed_edge.ancestors:
             pt_first, pt_second = an_ancestor.two_D_points[0], an_ancestor.two_D_points[1]
             if pt_first.id in point_to_points_edge_map['yz'].get(pt_second.id, []):
@@ -97,6 +100,7 @@ def edge_is_consistent(reconstructed_edge: ThreeDLineStringWithId, point_to_poin
 
     if abs(reconstructed_edge.three_D_points[0].y - reconstructed_edge.three_D_points[
         1].y) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
+        was_checked_at_least_once = True
         for an_ancestor in reconstructed_edge.ancestors:
             pt_first, pt_second = an_ancestor.two_D_points[0], an_ancestor.two_D_points[1]
             if pt_first.id in point_to_points_edge_map['xz'].get(pt_second.id, []):
@@ -104,9 +108,12 @@ def edge_is_consistent(reconstructed_edge: ThreeDLineStringWithId, point_to_poin
 
     if abs(reconstructed_edge.three_D_points[0].z - reconstructed_edge.three_D_points[
         1].z) < MAX_POINT_TO_POINT_ERROR_DISTANCE:
+        was_checked_at_least_once = True
         for an_ancestor in reconstructed_edge.ancestors:
             pt_first, pt_second = an_ancestor.two_D_points[0], an_ancestor.two_D_points[1]
             if pt_first.id in point_to_points_edge_map['xy'].get(pt_second.id, []):
                 return True
 
-    return False
+    # return false if at least one test was possible but no tests were successful
+    # return true if no test were possible
+    return not was_checked_at_least_once

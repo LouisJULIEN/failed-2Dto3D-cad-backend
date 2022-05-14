@@ -186,57 +186,61 @@ def test_small_square_e2e():
     assert result == expected
 
 
-def skip_test_pyramid_triangle_base_e2e():
+def test_pyramid_right_triangle_base_e2e():
     result = two_D_to_three_D({
         'xy': {'1': {
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                '2': {'x': 1.0, 'y': 2.0, 'z': 0.0},
-                '5': {'x': 0.0, 'y': 2.0, 'z': 0.0},
+                '2': {'x': 2.0, 'y': 0.0, 'z': 0.0},
+                '3': {'x': 0.0, 'y': 2.0, 'z': 0.0},
+                '5': {'x': 1.0, 'y': 1.0, 'z': 0.0},  # projected top
             },
             "edges": {
                 '1': {'verticesIds': ['1', '2']},
-                '2': {'verticesIds': ['2', '5']},
-                '3': {'verticesIds': ['5', '1']},
-            },
-            "type": "polygon",
-        }},
-        'yz': {'2': {
-            "vertices": {
-                '11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                '12': {'x': 1.0, 'y': 2.0, 'z': 0.0},
-                '13': {'x': 0.0, 'y': 2.0, 'z': 0.0},
-            },
-            "edges": {
-                '5': {'verticesIds': ['11', '12']},
-                '6': {'verticesIds': ['12', '13']},
-                '7': {'verticesIds': ['13', '11']},
+                '2': {'verticesIds': ['2', '3']},
+                '3': {'verticesIds': ['3', '1']},
+
+                '5': {'verticesIds': ['1', '5']},
+                '6': {'verticesIds': ['2', '5']},
+                '7': {'verticesIds': ['3', '5']},
             },
             "type": "polygon",
         }},
         'xz': {'3': {
             "vertices": {
                 '21': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                '22': {'x': 0.0, 'y': 0.0, 'z': 2.0},
-                '23': {'x': 2.0, 'y': 0.0, 'z': 1.0},
-                '25': {'x': 1.0, 'y': 0.0, 'z': 1.0},  # top pyramid
+                '22': {'x': 2.0, 'y': 0.0, 'z': 0.0},
+                '23': {'x': 1.0, 'y': 0.0, 'z': 3.0},
             },
             "edges": {
                 # outer edges
                 '21': {'verticesIds': ['21', '22']},
                 '22': {'verticesIds': ['22', '23']},
                 '23': {'verticesIds': ['23', '21']},
-                # inner edges
-                '24': {'verticesIds': ['21', '25']},
-                '25': {'verticesIds': ['22', '25']},
-                '26': {'verticesIds': ['23', '25']},
             },
             "type": "polygon",
-        }}
+        }},
+        'yz': {'2': {
+            "vertices": {
+                '11': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+                '12': {'x': 0.0, 'y': 2.0, 'z': 0.0},
+                '13': {'x': 0.0, 'y': 1.0, 'z': 3.0},
+            },
+            "edges": {
+                '15': {'verticesIds': ['11', '12']},
+                '16': {'verticesIds': ['12', '13']},
+                '17': {'verticesIds': ['13', '11']},
+            },
+            "type": "polygon",
+        }},
     })
 
     print(json.dumps(result))
-    assert False
+
+    assert len(result['dandling']['vertices'].keys()) == 0
+    assert len(result['dandling']['edges'].keys()) == 0
+    assert len(result['reconstructed']['vertices'].keys()) == 4
+    assert len(result['reconstructed']['edges'].keys()) == 6
 
 
 def test_pyramid_square_base_e2e():
@@ -267,12 +271,12 @@ def test_pyramid_square_base_e2e():
             "vertices": {
                 '1': {'x': 0.0, 'y': 0.0, 'z': 0.0},
                 '2': {'x': 1.0, 'y': 0.0, 'z': 2.0},
-                '5': {'x': 2.0, 'y': 0.0, 'z': 0.0},
+                '3': {'x': 2.0, 'y': 0.0, 'z': 0.0},
             },
             "edges": {
                 '1': {'verticesIds': ['1', '2']},
-                '2': {'verticesIds': ['2', '5']},
-                '3': {'verticesIds': ['5', '1']},
+                '2': {'verticesIds': ['2', '3']},
+                '3': {'verticesIds': ['3', '1']},
             },
             "type": "polygon",
         }},
@@ -291,6 +295,10 @@ def test_pyramid_square_base_e2e():
         }},
     })
 
-    print(json.dumps(result))
+    assert len(result['dandling']['vertices'].keys()) == 0
+    assert len(result['dandling']['edges'].keys()) == 0
     assert len(result['reconstructed']['vertices'].keys()) == 5
     assert len(result['reconstructed']['edges'].keys()) == 8
+
+    assert result == json.loads(
+        '{"reconstructed": {"edges": {"100000": {"id": "100000", "ancestorsIds": ["21", "7"], "threeDPointsIds": ["10000", "10006"]}, "100001": {"id": "100001", "ancestorsIds": ["22", "3"], "threeDPointsIds": ["10006", "10016"]}, "100002": {"id": "100002", "ancestorsIds": ["23", "7"], "threeDPointsIds": ["10016", "10022"]}, "100003": {"id": "100003", "ancestorsIds": ["24", "3"], "threeDPointsIds": ["10000", "10022"]}, "100004": {"id": "100004", "ancestorsIds": ["1", "26"], "threeDPointsIds": ["10000", "10026"]}, "100005": {"id": "100005", "ancestorsIds": ["1", "27"], "threeDPointsIds": ["10006", "10026"]}, "100006": {"id": "100006", "ancestorsIds": ["2", "28"], "threeDPointsIds": ["10016", "10026"]}, "100007": {"id": "100007", "ancestorsIds": ["2", "29"], "threeDPointsIds": ["10022", "10026"]}}, "vertices": {"10000": {"id": "10000", "ancestorsIds": ["1", "11", "21"], "x": 0.0, "y": 0.0, "z": 0.0}, "10006": {"id": "10006", "ancestorsIds": ["1", "13", "22"], "x": 0.0, "y": 2.0, "z": 0.0}, "10016": {"id": "10016", "ancestorsIds": ["13", "23", "3"], "x": 2.0, "y": 2.0, "z": 0.0}, "10022": {"id": "10022", "ancestorsIds": ["11", "24", "3"], "x": 2.0, "y": 0.0, "z": 0.0}, "10026": {"id": "10026", "ancestorsIds": ["12", "2", "25"], "x": 1.0, "y": 1.0, "z": 2.0}}}, "dandling": {"edges": {}, "vertices": {}}}')
