@@ -7,10 +7,15 @@ from flask_cors import CORS
 from main import two_D_to_three_D
 
 app = Flask(__name__)
-# > APP_ENV=local python web.py
+# > for local with hot reload
+# APP_ENV=local python web.py
+# > for prod like
+# gunicorn --workers 4 --bind 127.0.0.1:8000 web:app
 
 if os.environ.get('APP_ENV') == 'local':
+    print("Authorising CORS for local env")
     cors = CORS(app)
+
 
 @app.route("/health-check", methods=['GET'])
 def health_check():
@@ -61,5 +66,5 @@ def reconstruct():
     return two_D_to_three_D(parsed_payload)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__' and os.environ.get('APP_ENV') == 'local':
+    app.run(debug=True, port=8000)
