@@ -8,11 +8,11 @@ Install dependencies
 ```
 pip install -r requirements.txt
 ```
-Run in local with hot reload
+Run in local with hot reload and no CORS
 ```bash
 APP_ENV=local python web.py
 ```
-Run in local prod like
+Run prod like
 ```bash
 gunicorn --workers 4 --bind 127.0.0.1:8000 web:app
 ```
