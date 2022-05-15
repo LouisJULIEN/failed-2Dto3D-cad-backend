@@ -1,10 +1,10 @@
-import os
 
 from cerberus import Validator
 from flask import Flask, request
 from flask_cors import CORS
 
 from main import two_D_to_three_D
+from utils import env_is_local
 
 app = Flask(__name__)
 # > for local with hot reload
@@ -12,7 +12,7 @@ app = Flask(__name__)
 # > for prod like
 # gunicorn --workers 4 --bind 127.0.0.1:8000 web:app
 
-if os.environ.get('APP_ENV') == 'local':
+if env_is_local():
     print("Authorising CORS for local env")
     cors = CORS(app)
 
@@ -66,5 +66,5 @@ def reconstruct():
     return two_D_to_three_D(parsed_payload)
 
 
-if __name__ == '__main__' and os.environ.get('APP_ENV') == 'local':
+if __name__ == '__main__' and env_is_local():
     app.run(debug=True, port=8000)
