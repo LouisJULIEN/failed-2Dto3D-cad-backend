@@ -80,6 +80,7 @@ class ProjectedLineStringWithId(AncestorWithId, LineString):
     def export(self):
         return {
             'id': self.id,
+            # sorted for test stability and reproducibility
             'ancestorsIds': sorted([a.id for a in self.ancestors]),
             'twoDPointsIds': sorted([pt.id for pt in self.two_D_points]),
         }
@@ -98,6 +99,7 @@ class ThreeDLineStringWithId(AncestorWithId, LineString):
     def export(self):
         return {
             'id': self.id,
+            # sorted for test stability and reproducibility
             'ancestorsIds': sorted([a.id for a in self.ancestors]),
             'threeDPointsIds': sorted([pt.id for pt in self.three_D_points]),
         }

@@ -20,11 +20,9 @@ def two_D_to_three_D(two_D_projections: Raw2DProjections) -> Reconstructed3DMode
     three_D_reconstruction['reconstructed']['vertices'] = reconstructed_vertices
     three_D_reconstruction['dandling']['vertices'] = dandling_vertices
 
-    reconstructed_edges, dandling_edges = reconstruct_edges(parsed_two_D_projections,
-                                                            three_D_reconstruction['reconstructed']['vertices'])
+    reconstructed_edges, dandling_edges = reconstruct_edges(parsed_two_D_projections)
 
     three_D_reconstruction['reconstructed']['edges'] = reconstructed_edges
     three_D_reconstruction['dandling']['edges'] = dandling_edges
-
 
     return export_reconstructed_model(three_D_reconstruction)

@@ -1,4 +1,3 @@
-from graphics import draw_3D_points_list
 from preprocess.parse import parse_two_D_projections
 from vertex.vertex import reconstruct_vertices
 
@@ -34,8 +33,7 @@ class TestersVertex:
 
     @staticmethod
     def reconstruct_vertices(input,
-                             expected_found_vertices_number: int = 0, expected_dandling_vertices_number: int = 0,
-                             draw=False):
+                             expected_found_vertices_number: int = 0, expected_dandling_vertices_number: int = 0):
         parsed_input = TestersVertex.__parse_input(input)
         found, dandling = reconstruct_vertices(parsed_input)
 
@@ -43,9 +41,6 @@ class TestersVertex:
         [print(f) for f in found.values()]
         print("DANDLING")
         [print(f) for f in dandling.values()]
-
-        if draw:
-            draw_3D_points_list([list(found.values()), list(dandling.values())])
 
         assert len(found) == expected_found_vertices_number, \
             f"{len(found)} vs {expected_found_vertices_number}"

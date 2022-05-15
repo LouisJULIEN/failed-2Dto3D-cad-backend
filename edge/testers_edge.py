@@ -41,9 +41,8 @@ class TestersEdge:
         expected_edge_dandling = expected_edge_dandling or []
 
         parsed_input = parse_two_D_projections(input)
-        parsed_reconstructed_3_D_points = TestersEdge.format_3_D_points(parsed_input, reconstructed_3_D_points)
-        reconstructed_3_D_edges_output, dandling_3_D_edges_output = \
-            reconstruct_edges(parsed_input, parsed_reconstructed_3_D_points)
+        TestersEdge.format_3_D_points(parsed_input, reconstructed_3_D_points)  # side effect on parsed_input
+        reconstructed_3_D_edges_output, dandling_3_D_edges_output = reconstruct_edges(parsed_input)
 
         reconstructed_3_D_edges = []
         for a_reconstructed_edge in reconstructed_3_D_edges_output.values():
