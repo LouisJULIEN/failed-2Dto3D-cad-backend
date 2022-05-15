@@ -235,8 +235,6 @@ def test_pyramid_right_triangle_base_e2e():
         },
     })
 
-    print(json.dumps(result))
-
     assert len(result['dandling']['vertices'].keys()) == 0
     assert len(result['dandling']['edges'].keys()) == 0
     assert len(result['reconstructed']['vertices'].keys()) == 4

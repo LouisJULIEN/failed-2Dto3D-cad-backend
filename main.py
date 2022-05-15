@@ -26,8 +26,5 @@ def two_D_to_three_D(two_D_projections: Raw2DProjections) -> Reconstructed3DMode
     three_D_reconstruction['reconstructed']['edges'] = reconstructed_edges
     three_D_reconstruction['dandling']['edges'] = dandling_edges
 
-    # draw_3D_points_list([reconstructed_vertices, dandling_vertices])
-    print(f"reconstructed_vertices : {len(reconstructed_vertices)}, dandling_vertices : {len(dandling_vertices)}")
-    print(f"reconstructed_edges : {len(reconstructed_edges)}, dandling_edges : {len(dandling_edges)}")
 
     return export_reconstructed_model(three_D_reconstruction)

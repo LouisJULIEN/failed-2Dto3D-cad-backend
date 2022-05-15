@@ -44,7 +44,6 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
         if get_vertices_ids(reconstructed_edges_list[i]) == get_vertices_ids(reconstructed_edges_list[i + 1]):
             reconstructed_edges_list[i].attach_to_multiple_ancestors(reconstructed_edges_list[i + 1].ancestors)
 
-            print('removing redundant edge ', reconstructed_edges_list[i].three_D_points)
 
             for a_projected_edge in reconstructed_edges_list[i + 1].ancestors:
                 a_projected_edge.remove_ancestor(reconstructed_edges_list[i + 1])
@@ -56,7 +55,6 @@ def reconstruct_edges(parsed_projections: Parsed2DProjections, reconstructed_3d_
 
     for edge_id in list(reconstructed_edges.keys()):
         if not edge_is_consistent(reconstructed_edges[edge_id], point_to_points_edge_map):
-            print('removing inconsistent edge', reconstructed_edges[edge_id].three_D_points)
             for a_projected_edge in reconstructed_edges[edge_id].ancestors:
                 a_projected_edge.remove_ancestor(reconstructed_edges[edge_id])
             del reconstructed_edges[edge_id]
