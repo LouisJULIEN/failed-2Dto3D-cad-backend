@@ -1,6 +1,7 @@
 # small-2Dto3D-cad-backend
 This backend makes 3D model from 2D projections.
 2D projections are expected to be made up only of edges and points i.e. without any faces.  
+This project be used to visualize 2D blueprints in 3D or to check their consistency.  
 Frontend is [small-2Dto3D-cad-frontend](https://github.com/LouisJULIEN/small-2Dto3D-cad-frontend), go there for screenshots.
 # How to run it
 ### Run backend
